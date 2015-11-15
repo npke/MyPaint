@@ -18,6 +18,7 @@ using System.IO;
 using System.Windows.Markup;
 using Microsoft.Win32;
 using System.Xml;
+using System.Windows.Controls.Primitives;
 
 namespace MyPaint
 {
@@ -148,6 +149,12 @@ namespace MyPaint
         // Xử lý khi bấm chuột trên canvas
         private void drawingCanvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            // Xử lý cho thumb resize canvas
+            if (e.Source == canvasResizerRightBottom || e.Source == canvasResizerMiddleBottom || e.Source == canvasResizerRightMiddle)
+            {
+                return;
+            }
+
             // Lấy vị trí con trỏ chuột bấm xuống và đánh dấu trạng thái chuột là đã bấm
             startPoint = e.GetPosition(drawingCanvas);
             isMouseDowned = true;
@@ -1194,6 +1201,7 @@ namespace MyPaint
             this.Title = System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName) + " - My Paint";
             if (System.IO.Path.GetExtension(openFileDialog.FileName) == ".paint")
             {
+                drawingCanvas.Children.Clear();
                 string[] xamlShape = System.IO.File.ReadAllLines(openFileDialog.FileName);
                 foreach (string xamlShapeString in xamlShape)
                 {
@@ -1238,11 +1246,67 @@ namespace MyPaint
             drawingCanvas.Children.Clear();
             RemoveAdorner();
         }
-		
+
+        // Hàm xử lý khi Drag thumb resize canvas bottom right
+        void ResizeCanvasRightBottom(object sender, DragDeltaEventArgs e)
+        {
+            RemoveAdorner();
+            double h = drawingCanvas.Height + e.VerticalChange;
+            double w = drawingCanvas.Width + e.HorizontalChange;
+            if ((w >= 0) && (h >= 0))
+            {
+                drawingCanvas.Width = w;
+                drawingCanvas.Height = h;
+                Canvas.SetLeft(canvasResizerRightBottom, Canvas.GetLeft(canvasResizerRightBottom) +
+                                        e.HorizontalChange);
+                Canvas.SetTop(canvasResizerRightBottom, Canvas.GetTop(canvasResizerRightBottom) +
+                                        e.VerticalChange);
+
+                Canvas.SetLeft(canvasResizerRightMiddle, drawingCanvas.ActualWidth - 10);
+                Canvas.SetTop(canvasResizerRightMiddle, drawingCanvas.ActualHeight / 2 - 5);
+
+                Canvas.SetLeft(canvasResizerMiddleBottom, drawingCanvas.ActualWidth / 2 - 5);
+                Canvas.SetTop(canvasResizerMiddleBottom, drawingCanvas.ActualHeight - 10);
+            }
+        }
+
+        // Hàm xử lý khi Drag thumb resize canvas right middle
+        private void ResizeCanvasRightMiddle(object sender, DragDeltaEventArgs e)
+        {
+            RemoveAdorner();
+            double h = drawingCanvas.Height + e.VerticalChange;
+            double w = drawingCanvas.Width + e.HorizontalChange;
+            if ((w >= 0) && (h >= 0))
+            {
+                drawingCanvas.Width = w;
+                Canvas.SetLeft(canvasResizerRightMiddle, Canvas.GetLeft(canvasResizerRightMiddle) +
+                                        e.HorizontalChange);
+                Canvas.SetLeft(canvasResizerRightBottom, drawingCanvas.ActualWidth - 10);
+                Canvas.SetLeft(canvasResizerMiddleBottom, drawingCanvas.ActualWidth / 2 - 5);
+            }
+        }
+
+        // Hàm xử lý khi Drag thumb resize canvas middle bottom
+        private void ResizeCanvasMiddleBottom(object sender, DragDeltaEventArgs e)
+        {
+            RemoveAdorner();
+            double h = drawingCanvas.Height + e.VerticalChange;
+            double w = drawingCanvas.Width + e.HorizontalChange;
+            if ((w >= 0) && (h >= 0))
+            {
+                drawingCanvas.Height = h;
+                Canvas.SetTop(canvasResizerMiddleBottom, Canvas.GetTop(canvasResizerMiddleBottom) +
+                                        e.VerticalChange);
+                Canvas.SetTop(canvasResizerRightMiddle, drawingCanvas.ActualHeight / 2 - 5);
+                Canvas.SetTop(canvasResizerRightBottom, drawingCanvas.ActualHeight - 10);
+            }
+        }
+
 		// Đóng ứng dụng
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
+
     }
 }
