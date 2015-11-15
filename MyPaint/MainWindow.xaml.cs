@@ -150,7 +150,7 @@ namespace MyPaint
         private void drawingCanvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             // Xử lý cho thumb resize canvas
-            if (e.Source == canvasResizerRightBottom || e.Source == canvasResizerMiddleBottom || e.Source == canvasResizerRightMiddle)
+            if (e.Source == canvasResizerRightBottom)
             {
                 return;
             }
@@ -1261,44 +1261,6 @@ namespace MyPaint
                                         e.HorizontalChange);
                 Canvas.SetTop(canvasResizerRightBottom, Canvas.GetTop(canvasResizerRightBottom) +
                                         e.VerticalChange);
-
-                Canvas.SetLeft(canvasResizerRightMiddle, drawingCanvas.ActualWidth - 10);
-                Canvas.SetTop(canvasResizerRightMiddle, drawingCanvas.ActualHeight / 2 - 5);
-
-                Canvas.SetLeft(canvasResizerMiddleBottom, drawingCanvas.ActualWidth / 2 - 5);
-                Canvas.SetTop(canvasResizerMiddleBottom, drawingCanvas.ActualHeight - 10);
-            }
-        }
-
-        // Hàm xử lý khi Drag thumb resize canvas right middle
-        private void ResizeCanvasRightMiddle(object sender, DragDeltaEventArgs e)
-        {
-            RemoveAdorner();
-            double h = drawingCanvas.Height + e.VerticalChange;
-            double w = drawingCanvas.Width + e.HorizontalChange;
-            if ((w >= 0) && (h >= 0))
-            {
-                drawingCanvas.Width = w;
-                Canvas.SetLeft(canvasResizerRightMiddle, Canvas.GetLeft(canvasResizerRightMiddle) +
-                                        e.HorizontalChange);
-                Canvas.SetLeft(canvasResizerRightBottom, drawingCanvas.ActualWidth - 10);
-                Canvas.SetLeft(canvasResizerMiddleBottom, drawingCanvas.ActualWidth / 2 - 5);
-            }
-        }
-
-        // Hàm xử lý khi Drag thumb resize canvas middle bottom
-        private void ResizeCanvasMiddleBottom(object sender, DragDeltaEventArgs e)
-        {
-            RemoveAdorner();
-            double h = drawingCanvas.Height + e.VerticalChange;
-            double w = drawingCanvas.Width + e.HorizontalChange;
-            if ((w >= 0) && (h >= 0))
-            {
-                drawingCanvas.Height = h;
-                Canvas.SetTop(canvasResizerMiddleBottom, Canvas.GetTop(canvasResizerMiddleBottom) +
-                                        e.VerticalChange);
-                Canvas.SetTop(canvasResizerRightMiddle, drawingCanvas.ActualHeight / 2 - 5);
-                Canvas.SetTop(canvasResizerRightBottom, drawingCanvas.ActualHeight - 10);
             }
         }
 

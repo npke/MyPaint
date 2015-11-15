@@ -539,10 +539,6 @@
                 </Canvas.Background>
                 <Thumb Cursor="SizeNWSE" Name="canvasResizerRightBottom" Canvas.Left="970" Canvas.Top="490" BorderBrush="Black" Background="White" BorderThickness="0.8"
       Width="8" Height="8" DragDelta="ResizeCanvasRightBottom" />
-                <Thumb Cursor="SizeWE"  Name="canvasResizerRightMiddle" Canvas.Left="970" Canvas.Top="250" BorderBrush="Black" Background="White" BorderThickness="0.8"
-      Width="8" Height="8" DragDelta="ResizeCanvasRightMiddle" />
-                <Thumb Cursor="SizeNS" Name="canvasResizerMiddleBottom" Canvas.Left="490" Canvas.Top="490" BorderBrush="Black" Background="White" BorderThickness="0.8"
-      Width="8" Height="8" DragDelta="ResizeCanvasMiddleBottom" />
             </Canvas>
         </Border>
 
