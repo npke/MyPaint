@@ -880,6 +880,7 @@ namespace MyPaint
                 return;
 
             string fileExtension = System.IO.Path.GetExtension(openFileDialog.FileName);
+            fileExtension = fileExtension.ToLower();
             if (fileExtension != ".jpg" && fileExtension != ".bmp" && fileExtension != ".gif" && fileExtension != ".png")
             {
                 MessageBox.Show("Please choose an image file", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -887,8 +888,10 @@ namespace MyPaint
             }
 
             Image img = new Image();
-            img.Source = new BitmapImage(new Uri(@"resources/shapes.png", UriKind.Relative));
+            var uriSource = new Uri(openFileDialog.FileName);
+            img.Source = new BitmapImage(uriSource);
             drawingCanvas.Children.Add(img);
+            AddAdorner(img);
         }
 
 		// Thực hiện cập nhật khi thuộc tính StrokeThickness thay đổi
