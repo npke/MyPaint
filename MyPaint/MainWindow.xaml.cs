@@ -31,7 +31,7 @@ namespace MyPaint
         MyShape myShape;
        
         // Các đối tượng là tham số đầu vào khi vẽ một hình
-        Point startPoint, endPoint;
+        Point startPoint, endPoint, centerCanvasPoint;
         Brush strokeBrush, fillBrush, textBrush;
         double strokeThickness, top, left;
         DoubleCollection dashCollection = new DoubleCollection { };
@@ -82,6 +82,9 @@ namespace MyPaint
             textBrush = Brushes.Black;
 
             strokeThickness = 3;
+            
+            centerCanvasPoint.X = drawingCanvas.ActualWidth / 2;
+            centerCanvasPoint.Y = drawingCanvas.ActualHeight / 2;
         }
 
 
@@ -100,6 +103,7 @@ namespace MyPaint
                 tglbtnText.IsChecked = false;
                 tglbtnImage.IsChecked = false;
                 tglbtnLine.IsChecked = false;
+
             }
         }
 
@@ -280,6 +284,42 @@ namespace MyPaint
             if (!isMouseDowned)
                 return;
 
+            // Nếu bấm phím ALT thì cho phép xoay canvas
+            if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+            {
+               
+                endPoint = e.GetPosition(drawingCanvas);
+                Line l1 = new Line();
+                l1.X1 = centerCanvasPoint.X;
+                l1.Y1 = centerCanvasPoint.Y;
+
+                l1.X2 = startPoint.X;
+                l1.Y2 = startPoint.Y;
+                l1.Stroke = Brushes.Red;
+
+                Line l2 = new Line();
+                l2.X1 = centerCanvasPoint.X;
+                l2.Y1 = centerCanvasPoint.Y;
+
+                l2.X2 = endPoint.X;
+                l2.Y2 = endPoint.Y;
+                l2.Stroke = Brushes.Blue;
+
+                drawingCanvas.Children.Add(l1);
+
+                drawingCanvas.Children.Add(l2);
+                // Hai vector tạo góc xoay
+                Vector startVector = Point.Subtract(startPoint, centerCanvasPoint);
+                Vector deltaVector = Point.Subtract(endPoint, centerCanvasPoint);
+
+                // Góc giữa hai vector
+                double angle = Vector.AngleBetween(startVector, deltaVector);
+
+                // Xoay canvas
+                drawingCanvas.RenderTransform = new RotateTransform(angle, centerCanvasPoint.X, centerCanvasPoint.Y);
+                return;
+            }
+
             // Nếu đang ở chế độ vẽ => Vẽ đối tượng
             if (drawMode == MODE.DRAW && selectedUIElement == null)
             {
@@ -318,7 +358,8 @@ namespace MyPaint
             if ((drawMode == MODE.SELECT && selectedUIElement != null) || selectedUIElement != null)
             {
                 // Kiểm tra phím Ctr có đang được bấm thì sẽ thực hiện xoay đối tượng
-                if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)
+                || Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
                 {
                     // Xác định các điểm tâm và điểm tạo góc
                     Point centerPoint = new Point();
@@ -830,6 +871,24 @@ namespace MyPaint
             tglbtnSelect.IsChecked = false;
             if (drawMode == MODE.SELECT)
                 drawMode = MODE.DRAW;
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "All files |*.*|Bitmap (*.bmp)|*.bmp|PNG (*.png)|*.png|GIF (*.gif)|*.gif|JPEG (*.jpeg)|*.jpg";
+
+            if (openFileDialog.ShowDialog() == false)
+                return;
+
+            string fileExtension = System.IO.Path.GetExtension(openFileDialog.FileName);
+            if (fileExtension != ".jpg" && fileExtension != ".bmp" && fileExtension != ".gif" && fileExtension != ".png")
+            {
+                MessageBox.Show("Please choose an image file", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            Image img = new Image();
+            img.Source = new BitmapImage(new Uri(@"resources/shapes.png", UriKind.Relative));
+            drawingCanvas.Children.Add(img);
         }
 
 		// Thực hiện cập nhật khi thuộc tính StrokeThickness thay đổi
@@ -1155,7 +1214,7 @@ namespace MyPaint
                     default:
                         string[] xamlShape = new string[drawingCanvas.Children.Count];
                         int i = 0;
-                        foreach (Shape mySaveShape in drawingCanvas.Children)
+                        foreach (UIElement mySaveShape in drawingCanvas.Children)
                         {
                             xamlShape[i] = XamlWriter.Save(mySaveShape);
                             i++;
@@ -1214,7 +1273,7 @@ namespace MyPaint
                                 sw.Write(xamlShapeString);
                                 sw.Flush();
                                 stream.Seek(0, SeekOrigin.Begin);
-                                Shape shape = XamlReader.Load(stream) as Shape;
+                                UIElement shape = XamlReader.Load(stream) as UIElement;
                                 drawingCanvas.Children.Add(shape);
                             }
                         }
@@ -1270,5 +1329,16 @@ namespace MyPaint
             Application.Current.Shutdown();
         }
 
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            Options op = new Options();
+            op.rotateCanvas = rotateCanvas;
+            op.Show();
+        }
+
+        private void rotateCanvas(double angle)
+        {
+            drawingCanvas.LayoutTransform = new RotateTransform(angle);
+        }
     }
 }
