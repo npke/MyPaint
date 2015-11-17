@@ -9,30 +9,30 @@ using System.Windows.Shapes;
 
 namespace MyPaint
 {
+    // Lớp biểu diễn đối tượng hình trái tim
     public class Heart : Shape
     {
         public Heart()
         {
         }
 
+        // Cài đặt xử lý hình trái tim được tạo nên từ các đường cong Arc và Bezier
         protected override Geometry DefiningGeometry
         {
             get
             {
                 Point A = new Point(this.Width / 2, this.Height / 4);
-                Point B = new Point(0, this.Height / 3);
+                Point B = new Point(2, this.Height / 3);
                 Point C = new Point(this.Width / 2, this.Height);
                 Point B1 = new Point((B.X + C.X) / 6, (B.Y + C.Y) / 2);
-                Point D = new Point(this.Width, this.Height / 3);
+                Point D = new Point(this.Width - 2, this.Height / 3);
                 Point D1 = new Point( D.X - B1.X, B1.Y);
 
                 List<PathSegment> segments = new List<PathSegment>(4);
                 
                 segments.Add(new ArcSegment(B, new Size(1, 1), 0, true, SweepDirection.Counterclockwise, true));
-                //segments.Add(new QuadraticBezierSegment(B, C, true));
                 segments.Add(new BezierSegment(B, B1, C, true));
                 segments.Add(new BezierSegment(C, D1, D, true));
-                //segments.Add(new QuadraticBezierSegment(C, D, true));
                 segments.Add(new ArcSegment(A, new Size(1, 1), 0, true, SweepDirection.Counterclockwise, true));
                 
 

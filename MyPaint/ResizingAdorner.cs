@@ -15,6 +15,8 @@ using System.IO;
 
 namespace MyPaint
 {
+    // Nội dung phần code này xây dựng tham khảo từ mã nguồn và ý tưởng của tác giả DENYS VUIKA
+    // Link: https://denisvuyka.wordpress.com/2007/10/13/the-wpf-resizing-adorner-for-canvas/
     public class ResizingAdorner : Adorner
     {
         // Tạo các thumb dùng như anchor point để thay đổi kích thước các hình vẽ

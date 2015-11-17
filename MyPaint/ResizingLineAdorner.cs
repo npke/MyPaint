@@ -72,7 +72,8 @@ namespace MyPaint
             InvalidateArrange();
         }
 
-
+        // Một vài xử lý được thảm khảo từ Stack Over Flow
+        // Link: http://stackoverflow.com/questions/17568796/how-to-arrange-thumbs-with-a-line-for-moving-a-line-in-a-wpf-custom-adorner
         protected override Size ArrangeOverride(Size finalSize)
         {
             Line selectedLine = AdornedElement as Line;

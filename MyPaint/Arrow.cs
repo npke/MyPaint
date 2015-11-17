@@ -10,12 +10,14 @@ using System.Windows.Shapes;
 
 namespace MyPaint
 {
+    // Lớp biểu diễn đối tượng hình mũi tên
     public class Arrow : Shape
     {
         public Arrow()
         {            
         }
 
+        // Cài đặt các đường Path nối nhau để tạo nên hình mũi tên
         protected override Geometry DefiningGeometry
         {
             get 
@@ -28,7 +30,7 @@ namespace MyPaint
                 Point F = new Point(2 * this.Width / 3 - 1, this.Height - 1);
                 Point G = new Point(this.Width - 1, this.Height / 2);
 
-                List<PathSegment> segments = new List<PathSegment>(3);
+                List<PathSegment> segments = new List<PathSegment>(7);
                 segments.Add(new LineSegment(A, true));
                 segments.Add(new LineSegment(B, true));
                 segments.Add(new LineSegment(E, true));
@@ -37,8 +39,6 @@ namespace MyPaint
                 segments.Add(new LineSegment(C, true));
                 segments.Add(new LineSegment(D, true));
                 
-
-
                 List<PathFigure> figures = new List<PathFigure>(1);
                 PathFigure pf = new PathFigure(A, segments, true);
                 figures.Add(pf);
@@ -47,6 +47,5 @@ namespace MyPaint
                 return g;
             }
         }
-
     }
 }

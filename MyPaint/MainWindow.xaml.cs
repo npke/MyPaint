@@ -31,7 +31,7 @@ namespace MyPaint
         MyShape myShape;
        
         // Các đối tượng là tham số đầu vào khi vẽ một hình
-        Point startPoint, endPoint, centerCanvasPoint;
+        Point startPoint, endPoint;
         Brush strokeBrush, fillBrush, textBrush;
         double strokeThickness, top, left;
         DoubleCollection dashCollection = new DoubleCollection { };
@@ -58,8 +58,6 @@ namespace MyPaint
         public static Stack<List<UIElement>> UndoStack = new Stack<List<UIElement>>();
         public static Stack<List<UIElement>> RedoStack = new Stack<List<UIElement>>();
 
-        public static Canvas ijk;
-        
 
         // Đếm số lần thực hiện paste một đối tượng
         int iPaste = 0;
@@ -83,9 +81,6 @@ namespace MyPaint
             textBrush = Brushes.Black;
 
             strokeThickness = 3;
-            
-            centerCanvasPoint.X = drawingCanvas.ActualWidth / 2;
-            centerCanvasPoint.Y = drawingCanvas.ActualHeight / 2;
         }
 
 
@@ -113,7 +108,7 @@ namespace MyPaint
         private void drawLine(object sender, RoutedEventArgs e)
         {
             RemoveAdorner();
-            drawWhat = SHAPE.HEART;
+            drawWhat = SHAPE.LINE;
             tglbtnEllipse.IsChecked = false;
             tglbtnRectangle.IsChecked = false;
             tglbtnText.IsChecked = false;
@@ -152,10 +147,55 @@ namespace MyPaint
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình mũi tên
-        private void drawArrow(object sender, RoutedEventArgs e)
+        private void drawArrow()
         {
             RemoveAdorner();
             drawWhat = SHAPE.ARROW;
+            tglbtnRectangle.IsChecked = false;
+            tglbtnEllipse.IsChecked = false;
+            tglbtnLine.IsChecked = false;
+            tglbtnText.IsChecked = false;
+            tglbtnImage.IsChecked = false;
+            tglbtnSelect.IsChecked = false;
+            if (drawMode == MODE.SELECT)
+                drawMode = MODE.DRAW;
+        }
+
+        // Đánh dấu đối tượng sẽ vẽ là hình tam giác
+        private void drawTriangle()
+        {
+            RemoveAdorner();
+            drawWhat = SHAPE.TRIANGLE;
+            tglbtnRectangle.IsChecked = false;
+            tglbtnEllipse.IsChecked = false;
+            tglbtnLine.IsChecked = false;
+            tglbtnText.IsChecked = false;
+            tglbtnImage.IsChecked = false;
+            tglbtnSelect.IsChecked = false;
+            if (drawMode == MODE.SELECT)
+                drawMode = MODE.DRAW;
+        }
+
+        // Đánh dấu đối tượng sẽ vẽ là hình ngôi sao
+        private void drawStar()
+        {
+            RemoveAdorner();
+            drawWhat = SHAPE.STAR;
+            tglbtnRectangle.IsChecked = false;
+            tglbtnEllipse.IsChecked = false;
+            tglbtnLine.IsChecked = false;
+            tglbtnText.IsChecked = false;
+            tglbtnImage.IsChecked = false;
+            tglbtnSelect.IsChecked = false;
+            if (drawMode == MODE.SELECT)
+                drawMode = MODE.DRAW;
+        }
+
+        // Đánh dấu đối tượng sẽ vẽ là hình trái tim
+        private void drawHeart()
+        {
+            RemoveAdorner();
+            drawWhat = SHAPE.HEART;
             tglbtnRectangle.IsChecked = false;
             tglbtnEllipse.IsChecked = false;
             tglbtnLine.IsChecked = false;
@@ -320,42 +360,6 @@ namespace MyPaint
             if (!isMouseDowned)
                 return;
 
-            // Nếu bấm phím ALT thì cho phép xoay canvas
-            if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
-            {
-               
-                endPoint = e.GetPosition(drawingCanvas);
-                Line l1 = new Line();
-                l1.X1 = centerCanvasPoint.X;
-                l1.Y1 = centerCanvasPoint.Y;
-
-                l1.X2 = startPoint.X;
-                l1.Y2 = startPoint.Y;
-                l1.Stroke = Brushes.Red;
-
-                Line l2 = new Line();
-                l2.X1 = centerCanvasPoint.X;
-                l2.Y1 = centerCanvasPoint.Y;
-
-                l2.X2 = endPoint.X;
-                l2.Y2 = endPoint.Y;
-                l2.Stroke = Brushes.Blue;
-
-                drawingCanvas.Children.Add(l1);
-
-                drawingCanvas.Children.Add(l2);
-                // Hai vector tạo góc xoay
-                Vector startVector = Point.Subtract(startPoint, centerCanvasPoint);
-                Vector deltaVector = Point.Subtract(endPoint, centerCanvasPoint);
-
-                // Góc giữa hai vector
-                double angle = Vector.AngleBetween(startVector, deltaVector);
-
-                // Xoay canvas
-                drawingCanvas.RenderTransform = new RotateTransform(angle, centerCanvasPoint.X, centerCanvasPoint.Y);
-                return;
-            }
-
             // Nếu đang ở chế độ vẽ => Vẽ đối tượng
             if (drawMode == MODE.DRAW && selectedUIElement == null)
             {
@@ -464,7 +468,8 @@ namespace MyPaint
             UndoStack.Push(UIEList);
         }
 
-		// Phương thức sao chép một đối tượng theo kiểu deep
+		// Phương thức sao chép một đối tượng
+        // Code tham khảo từ StackOverFlow
         private UIElement DeepClone(UIElement element)
         {
             string shapeStr = XamlWriter.Save(element);
@@ -900,6 +905,7 @@ namespace MyPaint
 		// Chưa xử lý xong
         private void addImage(object sender, RoutedEventArgs e)
         {
+            RemoveAdorner();
             tglbtnEllipse.IsChecked = false;
             tglbtnLine.IsChecked = false;
             tglbtnText.IsChecked = false;
@@ -928,6 +934,7 @@ namespace MyPaint
             img.Source = new BitmapImage(uriSource);
             drawingCanvas.Children.Add(img);
             AddAdorner(img);
+            SnapCanvas();
         }
 
 		// Thực hiện cập nhật khi thuộc tính StrokeThickness thay đổi
@@ -1208,7 +1215,7 @@ namespace MyPaint
         private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Size size = new Size(drawingCanvas.ActualWidth, drawingCanvas.ActualHeight);
-
+            drawingCanvas.Children.Remove(canvasResizerRightBottom);
             drawingCanvas.Measure(size);
             drawingCanvas.Arrange(new Rect(size));
 
@@ -1383,6 +1390,24 @@ namespace MyPaint
             Application.Current.Shutdown();
         }
 
-        
+        private void triangleShape_Click(object sender, RoutedEventArgs e)
+        {
+            drawTriangle();
+        }
+
+        private void arrowShape_Click(object sender, RoutedEventArgs e)
+        {
+            drawArrow();
+        }
+
+        private void starShape_Click(object sender, RoutedEventArgs e)
+        {
+            drawStar();
+        }
+
+        private void heartShape_Click(object sender, RoutedEventArgs e)
+        {
+            drawHeart();
+        }
     }
 }

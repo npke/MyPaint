@@ -9,6 +9,7 @@ using System.Windows.Shapes;
 
 namespace MyPaint
 {
+    // Class phương trình đường thẳng
     public class PTDuongThang
     {
        public double a {get; set;}
@@ -21,6 +22,8 @@ namespace MyPaint
             a = b = c = 0;
         }
 
+
+        // Phương thức khởi tạo phương trình đường thẳng đi qua 2 điểm
         public PTDuongThang(Point M, Point N)
         {
             Vector VTPT = new Vector(-(N.Y - M.Y), (N.X - M.X));
@@ -30,11 +33,15 @@ namespace MyPaint
         }
     }
 
+    // Lớp biểu diễn hình ngôi sao
     public class Star : Shape
     {
+        // Phương thức khởi tạo
         public Star()
         {            
         }
+
+        // Xác định giao điểm của 2 đường thẳng
         private Point getIntersectionPoint(PTDuongThang A, PTDuongThang B)
         {
             double delta = A.a * B.b - B.a * A.b;
@@ -46,6 +53,8 @@ namespace MyPaint
 
             return new Point(x, y);
         }
+
+        // Cài đặt xử lý đối tượng hình ngôi sao
         protected override Geometry DefiningGeometry
         {
             get 
@@ -72,7 +81,7 @@ namespace MyPaint
                 Point I = getIntersectionPoint(PTAG, PTCH);
 
 
-                List<PathSegment> segments = new List<PathSegment>(3);
+                List<PathSegment> segments = new List<PathSegment>(10);
                 segments.Add(new LineSegment(A, true));
                 segments.Add(new LineSegment(B, true));
                 segments.Add(new LineSegment(C, true));

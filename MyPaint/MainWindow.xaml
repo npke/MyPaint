@@ -169,9 +169,14 @@
                         <MenuItem Header="Remove Border" Click="RemoveTextBorder"/>
                     </MenuItem>
                 </MenuItem>
+                <MenuItem Header="Custom Shapes">
+                    <MenuItem Name="triangleShape" Header="Triangle" Click="triangleShape_Click"/>
+                    <MenuItem Name="arrowShape" Header="Arrow" Click="arrowShape_Click"/>
+                    <MenuItem Name="starShape" Header="Star" Click="starShape_Click"/>
+                    <MenuItem Name="heartShape" Header="Heart" Click="heartShape_Click"/>
+                </MenuItem>
                 <MenuItem Header="Option">
-                    <MenuItem Header="Rotate canvas" Click="MenuItem_Click_1">
-                    </MenuItem>
+                    <MenuItem Header="Rotate canvas" Click="MenuItem_Click_1" />
                 </MenuItem>
                 <MenuItem Header="Help" >
                     <MenuItem Header="Guide">
@@ -537,8 +542,8 @@
             </StackPanel>
         </DockPanel>
 
-        <Border Background="#FFB3C1C1" Grid.Row="2" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-            <Canvas Margin="5" Width="980" Height="500" ClipToBounds="True" Name="drawingCanvas" MouseMove="drawingCanvas_MouseMove" MouseUp="drawingCanvas_MouseUp" PreviewMouseDown="drawingCanvas_PreviewMouseDown">
+        <Border Padding="0" Background="#FFB3C1C1" Grid.Row="2" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <Canvas Margin="0.1" Width="980" Height="500" ClipToBounds="True" Name="drawingCanvas" MouseMove="drawingCanvas_MouseMove" MouseUp="drawingCanvas_MouseUp" PreviewMouseDown="drawingCanvas_PreviewMouseDown">
                 <Canvas.Background>
                     <SolidColorBrush Color="White"></SolidColorBrush>
                 </Canvas.Background>

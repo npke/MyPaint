@@ -9,18 +9,21 @@ using System.Windows.Shapes;
 
 namespace MyPaint
 {
+    // Lớp biểu diễn đối tượng hình tam giác
     public class Triangle : Shape
     {
+        // Phương thức khởi tạo
         public Triangle()
         {            
         }
 
+        // Cài đặt xử lý 
         protected override Geometry DefiningGeometry
         {
             get 
             {
-                Point A = new Point(this.Width/2 -1 , 0+1);
-                Point B = new Point(0+1,this.Height - 1);
+                Point A = new Point(this.Width / 2 - 1, 1);
+                Point B = new Point(1, this.Height - 1);
                 Point C = new Point(this.Width - 1, this.Height - 1);
 
                 List<PathSegment> segments = new List<PathSegment>(3);
