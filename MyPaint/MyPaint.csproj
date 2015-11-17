@@ -56,11 +56,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Arrow.cs" />
+    <Compile Include="Heart.cs" />
+    <Compile Include="MyArrow.cs" />
+    <Compile Include="MyHeart.cs" />
+    <Compile Include="MyStar.cs" />
+    <Compile Include="MyTriangle.cs" />
     <Compile Include="Options.xaml.cs">
       <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
     <Compile Include="ResizingAdorner.cs" />
     <Compile Include="ResizingLineAdorner.cs" />
+    <Compile Include="Star.cs" />
+    <Compile Include="Triangle.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

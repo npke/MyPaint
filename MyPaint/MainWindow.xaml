@@ -1,6 +1,7 @@
 ﻿<Window x:Class="MyPaint.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MyPaint"
         Title="Untitled - My Paint" Height="750" Width="1284" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="resources/favicon.ico" KeyDown="Window_KeyDown">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Copy" CanExecute="CopyCommand_CanExecute" Executed="CopyCommand_Executed" />
@@ -537,7 +538,7 @@
         </DockPanel>
 
         <Border Background="#FFB3C1C1" Grid.Row="2" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-            <Canvas  Margin="5" Width="980" Height="500" ClipToBounds="True" Name="drawingCanvas" MouseMove="drawingCanvas_MouseMove" MouseUp="drawingCanvas_MouseUp" PreviewMouseDown="drawingCanvas_PreviewMouseDown">
+            <Canvas Margin="5" Width="980" Height="500" ClipToBounds="True" Name="drawingCanvas" MouseMove="drawingCanvas_MouseMove" MouseUp="drawingCanvas_MouseUp" PreviewMouseDown="drawingCanvas_PreviewMouseDown">
                 <Canvas.Background>
                     <SolidColorBrush Color="White"></SolidColorBrush>
                 </Canvas.Background>

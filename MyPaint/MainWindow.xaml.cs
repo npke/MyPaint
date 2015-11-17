@@ -42,7 +42,7 @@ namespace MyPaint
         bool isMoved = false;
 
         // Kiểu enum xác định hình sẽ vẽ và chế độ
-        enum SHAPE { LINE = 1, RECTANGLE = 2, ELLIPSE = 3 };
+        enum SHAPE { LINE = 1, RECTANGLE = 2, ELLIPSE = 3, ARROW = 4, TRIANGLE = 5, HEART = 6, STAR = 7 };
         enum MODE { DRAW = 1, SELECT = 2 }
 
         SHAPE drawWhat = SHAPE.LINE;
@@ -69,6 +69,7 @@ namespace MyPaint
         {
             InitializeComponent();
             InitializeShape();
+            //drawArrow();
         }
 
         // Thiết lập các thuộc tính mặc định cho hình vẽ
@@ -112,7 +113,7 @@ namespace MyPaint
         private void drawLine(object sender, RoutedEventArgs e)
         {
             RemoveAdorner();
-            drawWhat = SHAPE.LINE;
+            drawWhat = SHAPE.HEART;
             tglbtnEllipse.IsChecked = false;
             tglbtnRectangle.IsChecked = false;
             tglbtnText.IsChecked = false;
@@ -142,6 +143,21 @@ namespace MyPaint
             RemoveAdorner();
             drawWhat = SHAPE.ELLIPSE;
             tglbtnRectangle.IsChecked = false;
+            tglbtnLine.IsChecked = false;
+            tglbtnText.IsChecked = false;
+            tglbtnImage.IsChecked = false;
+            tglbtnSelect.IsChecked = false;
+            if (drawMode == MODE.SELECT)
+                drawMode = MODE.DRAW;
+        }
+
+        // Đánh dấu đối tượng sẽ vẽ là hình mũi tên
+        private void drawArrow(object sender, RoutedEventArgs e)
+        {
+            RemoveAdorner();
+            drawWhat = SHAPE.ARROW;
+            tglbtnRectangle.IsChecked = false;
+            tglbtnEllipse.IsChecked = false;
             tglbtnLine.IsChecked = false;
             tglbtnText.IsChecked = false;
             tglbtnImage.IsChecked = false;
@@ -220,6 +236,26 @@ namespace MyPaint
                     case SHAPE.ELLIPSE:
                         if (myShape == null)
                             myShape = new MyEllipse();
+                        break;
+
+                    case SHAPE.ARROW:
+                        if (myShape == null)
+                            myShape = new MyArrow();
+                        break;
+
+                    case SHAPE.TRIANGLE:
+                        if (myShape == null)
+                            myShape = new MyTriangle();
+                        break;
+
+                    case SHAPE.HEART:
+                        if (myShape == null)
+                            myShape = new MyHeart();
+                        break;
+
+                    case SHAPE.STAR:
+                        if (myShape == null)
+                            myShape = new MyStar();
                         break;
 
                     default:
@@ -1198,6 +1234,7 @@ namespace MyPaint
 				 
                 switch (System.IO.Path.GetExtension(saveFileDialog.FileName))
                 {
+                    // Lưu dạng bitmap
                     case ".bmp":
                         bitmapEncoder = new BmpBitmapEncoder();
                         break;
@@ -1214,6 +1251,7 @@ namespace MyPaint
                         bitmapEncoder = new JpegBitmapEncoder();
                         break;
 
+                    // Lưu đối tượng
                     default:
                         string[] xamlShape = new string[drawingCanvas.Children.Count];
                         int i = 0;
@@ -1326,12 +1364,7 @@ namespace MyPaint
             }
         }
 
-		// Đóng ứng dụng
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
+        // Chức năng xoay canvas
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
             Options op = new Options();
@@ -1343,5 +1376,13 @@ namespace MyPaint
         {
             drawingCanvas.LayoutTransform = new RotateTransform(angle);
         }
+
+		// Đóng ứng dụng
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        
     }
 }

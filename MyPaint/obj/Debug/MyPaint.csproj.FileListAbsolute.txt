@@ -27,3 +27,5 @@ E:\LOCKED\HCMUS\KI 5\LAP TRINH WINDOWS\Projects\Lan 2\Source\MyPaint\obj\Debug\M
 E:\LOCKED\HCMUS\KI 5\LAP TRINH WINDOWS\Projects\Lan 2\Source\MyPaint\obj\Debug\MyPaint.csproj.GenerateResource.Cache
 E:\LOCKED\HCMUS\KI 5\LAP TRINH WINDOWS\Projects\Lan 2\Source\MyPaint\obj\Debug\Options.baml
 E:\LOCKED\HCMUS\KI 5\LAP TRINH WINDOWS\Projects\Lan 2\Source\MyPaint\obj\Debug\Options.g.cs
+E:\LOCKED\HCMUS\KI 5\LAP TRINH WINDOWS\Projects\Lan 2\Source\MyPaint\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\LOCKED\HCMUS\KI 5\LAP TRINH WINDOWS\Projects\Lan 2\Source\MyPaint\obj\Debug\MyPaint_MarkupCompile.lref
