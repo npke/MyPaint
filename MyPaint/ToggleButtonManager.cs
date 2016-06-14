@@ -8,18 +8,18 @@ namespace MyPaint
 {
     class ToggleButtonManager
     {
-        private static List<ToggleButton> toggleBtnList = new List<ToggleButton>();
+        private List<ToggleButton> toggleBtnList = new List<ToggleButton>();
 
-        public static void AddToggleButton(ToggleButton toggleButton)
+        public void AddToggleButton(ToggleButton toggleButton)
         {
             toggleBtnList.Add(toggleButton);
         }
 
-        public static void CheckButton(ToggleButton checkedBtn)
+        public void CheckButton(ToggleButton checkedBtn)
         {
             foreach (ToggleButton btn in toggleBtnList)
             {
-                if (btn != checkedBtn)
+                if (btn == null || btn != checkedBtn)
                     btn.IsChecked = false;
             }
         }

@@ -63,11 +63,24 @@ namespace MyPaint
         int iPaste = 0;
         double iLeft = 0, iTop = 0;
 
+
+        // Đối tượng quản lý các shape toggle button
+        private ToggleButtonManager shapeToggleButtonManager = new ToggleButtonManager();
         public MainWindow()
         {
             InitializeComponent();
             InitializeShape();
-            //drawArrow();
+            AddShapeToggleButton();
+        }
+
+        private void AddShapeToggleButton()
+        {
+            shapeToggleButtonManager.AddToggleButton(tglbtnEllipse);
+            shapeToggleButtonManager.AddToggleButton(tglbtnLine);
+            shapeToggleButtonManager.AddToggleButton(tglbtnRectangle);
+            shapeToggleButtonManager.AddToggleButton(tglbtnText);
+            shapeToggleButtonManager.AddToggleButton(tglbtnImage);
+            shapeToggleButtonManager.AddToggleButton(tglbtnSelect);
         }
 
         // Thiết lập các thuộc tính mặc định cho hình vẽ
@@ -109,11 +122,12 @@ namespace MyPaint
         {
             RemoveAdorner();
             drawWhat = SHAPE.LINE;
-            tglbtnEllipse.IsChecked = false;
-            tglbtnRectangle.IsChecked = false;
-            tglbtnText.IsChecked = false;
-            tglbtnImage.IsChecked = false;
-            tglbtnSelect.IsChecked = false;
+            shapeToggleButtonManager.CheckButton(tglbtnLine);
+            //tglbtnEllipse.IsChecked = false;
+            //tglbtnRectangle.IsChecked = false;
+            //tglbtnText.IsChecked = false;
+            //tglbtnImage.IsChecked = false;
+            //tglbtnSelect.IsChecked = false;
             if (drawMode == MODE.SELECT)
                 drawMode = MODE.DRAW;
         }
@@ -123,11 +137,12 @@ namespace MyPaint
         {
             RemoveAdorner();
             drawWhat = SHAPE.RECTANGLE;
-            tglbtnEllipse.IsChecked = false;
-            tglbtnLine.IsChecked = false;
-            tglbtnText.IsChecked = false;
-            tglbtnImage.IsChecked = false;
-            tglbtnSelect.IsChecked = false;
+            shapeToggleButtonManager.CheckButton(tglbtnRectangle);
+            //tglbtnEllipse.IsChecked = false;
+            //tglbtnLine.IsChecked = false;
+            //tglbtnText.IsChecked = false;
+            //tglbtnImage.IsChecked = false;
+            //tglbtnSelect.IsChecked = false;
             if (drawMode == MODE.SELECT)
                 drawMode = MODE.DRAW;
         }
@@ -137,11 +152,12 @@ namespace MyPaint
         {
             RemoveAdorner();
             drawWhat = SHAPE.ELLIPSE;
-            tglbtnRectangle.IsChecked = false;
-            tglbtnLine.IsChecked = false;
-            tglbtnText.IsChecked = false;
-            tglbtnImage.IsChecked = false;
-            tglbtnSelect.IsChecked = false;
+            shapeToggleButtonManager.CheckButton(tglbtnEllipse);
+            //tglbtnRectangle.IsChecked = false;
+            //tglbtnLine.IsChecked = false;
+            //tglbtnText.IsChecked = false;
+            //tglbtnImage.IsChecked = false;
+            //tglbtnSelect.IsChecked = false;
             if (drawMode == MODE.SELECT)
                 drawMode = MODE.DRAW;
         }
@@ -151,12 +167,13 @@ namespace MyPaint
         {
             RemoveAdorner();
             drawWhat = SHAPE.ARROW;
-            tglbtnRectangle.IsChecked = false;
-            tglbtnEllipse.IsChecked = false;
-            tglbtnLine.IsChecked = false;
-            tglbtnText.IsChecked = false;
-            tglbtnImage.IsChecked = false;
-            tglbtnSelect.IsChecked = false;
+            shapeToggleButtonManager.CheckButton(null);
+            //tglbtnRectangle.IsChecked = false;
+            //tglbtnEllipse.IsChecked = false;
+            //tglbtnLine.IsChecked = false;
+            //tglbtnText.IsChecked = false;
+            //tglbtnImage.IsChecked = false;
+            //tglbtnSelect.IsChecked = false;
             if (drawMode == MODE.SELECT)
                 drawMode = MODE.DRAW;
         }
@@ -166,12 +183,13 @@ namespace MyPaint
         {
             RemoveAdorner();
             drawWhat = SHAPE.TRIANGLE;
-            tglbtnRectangle.IsChecked = false;
-            tglbtnEllipse.IsChecked = false;
-            tglbtnLine.IsChecked = false;
-            tglbtnText.IsChecked = false;
-            tglbtnImage.IsChecked = false;
-            tglbtnSelect.IsChecked = false;
+            shapeToggleButtonManager.CheckButton(null);
+            //tglbtnRectangle.IsChecked = false;
+            //tglbtnEllipse.IsChecked = false;
+            //tglbtnLine.IsChecked = false;
+            //tglbtnText.IsChecked = false;
+            //tglbtnImage.IsChecked = false;
+            //tglbtnSelect.IsChecked = false;
             if (drawMode == MODE.SELECT)
                 drawMode = MODE.DRAW;
         }
@@ -181,12 +199,13 @@ namespace MyPaint
         {
             RemoveAdorner();
             drawWhat = SHAPE.STAR;
-            tglbtnRectangle.IsChecked = false;
-            tglbtnEllipse.IsChecked = false;
-            tglbtnLine.IsChecked = false;
-            tglbtnText.IsChecked = false;
-            tglbtnImage.IsChecked = false;
-            tglbtnSelect.IsChecked = false;
+            shapeToggleButtonManager.CheckButton(null);
+            //tglbtnRectangle.IsChecked = false;
+            //tglbtnEllipse.IsChecked = false;
+            //tglbtnLine.IsChecked = false;
+            //tglbtnText.IsChecked = false;
+            //tglbtnImage.IsChecked = false;
+            //tglbtnSelect.IsChecked = false;
             if (drawMode == MODE.SELECT)
                 drawMode = MODE.DRAW;
         }
@@ -196,12 +215,13 @@ namespace MyPaint
         {
             RemoveAdorner();
             drawWhat = SHAPE.HEART;
-            tglbtnRectangle.IsChecked = false;
-            tglbtnEllipse.IsChecked = false;
-            tglbtnLine.IsChecked = false;
-            tglbtnText.IsChecked = false;
-            tglbtnImage.IsChecked = false;
-            tglbtnSelect.IsChecked = false;
+            shapeToggleButtonManager.CheckButton(null);
+            //tglbtnRectangle.IsChecked = false;
+            //tglbtnEllipse.IsChecked = false;
+            //tglbtnLine.IsChecked = false;
+            //tglbtnText.IsChecked = false;
+            //tglbtnImage.IsChecked = false;
+            //tglbtnSelect.IsChecked = false;
             if (drawMode == MODE.SELECT)
                 drawMode = MODE.DRAW;
         }

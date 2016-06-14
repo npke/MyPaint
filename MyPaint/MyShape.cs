@@ -13,6 +13,9 @@ namespace MyPaint
     // Lớp MyShape là lớp trừu tượng dùng để quản lý các đối tượng đồ họa như Line, Rectangle, Ellipse
     public abstract class MyShape
     {
+        // Handle để quản lý đối tượng trong ShapeManager
+        public int Handle { get; private set; }
+
         // Màu đường viền nét vẽ
         public Brush StrokeBrush { get; set; }
 
@@ -39,6 +42,13 @@ namespace MyPaint
 
         // Phương thức vẽ khi nhả chuột
         public abstract void DrawOnMouseUp(UIElementCollection collection, bool shiftKeyPressed);
+
+        // Constructor
+        public MyShape()
+        {
+            this.Handle = ShapeManager.GetNextHandle();
+            ShapeManager.AddShape(this);
+        }
 
         // Phương thức xóa bỏ đối tượng đã vẽ
         public void Remove(System.Windows.Controls.UIElementCollection collection)
