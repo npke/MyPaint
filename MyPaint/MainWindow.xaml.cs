@@ -168,12 +168,12 @@ namespace MyPaint
             RemoveAdorner();
             drawWhat = SHAPE.ARROW;
             shapeToggleButtonManager.CheckButton(null);
-            //tglbtnRectangle.IsChecked = false;
-            //tglbtnEllipse.IsChecked = false;
-            //tglbtnLine.IsChecked = false;
-            //tglbtnText.IsChecked = false;
-            //tglbtnImage.IsChecked = false;
-            //tglbtnSelect.IsChecked = false;
+            tglbtnRectangle.IsChecked = false;
+            tglbtnEllipse.IsChecked = false;
+            tglbtnLine.IsChecked = false;
+            tglbtnText.IsChecked = false;
+            tglbtnImage.IsChecked = false;
+            tglbtnSelect.IsChecked = false;
             if (drawMode == MODE.SELECT)
                 drawMode = MODE.DRAW;
         }
@@ -1394,9 +1394,11 @@ namespace MyPaint
         // Chức năng xoay canvas
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
+            //Options op = Options.GetOptionsInstance();
             Options op = new Options();
             op.rotateCanvas = rotateCanvas;
             op.Show();
+            op.Focus();
         }
 
         private void rotateCanvas(double angle)

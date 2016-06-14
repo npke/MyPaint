@@ -9,7 +9,8 @@ namespace MyPaint
     class ShapeManager
     {
         private static int nextHandle = 0;
-        private static Dictionary<int, MyShape> shapeList = new Dictionary<int, MyShape>();
+        private static Dictionary<int, MyShape> 
+                        shapeList = new Dictionary<int, MyShape>();
         public static int GetNextHandle()
         {
             return nextHandle++;
