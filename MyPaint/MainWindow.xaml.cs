@@ -42,10 +42,10 @@ namespace MyPaint
         bool isMoved = false;
 
         // Kiểu enum xác định hình sẽ vẽ và chế độ
-        enum SHAPE { LINE = 1, RECTANGLE = 2, ELLIPSE = 3, ARROW = 4, TRIANGLE = 5, HEART = 6, STAR = 7 };
+        
         enum MODE { DRAW = 1, SELECT = 2 }
 
-        SHAPE drawWhat = SHAPE.LINE;
+        TypeShape.SHAPE drawWhat = TypeShape.SHAPE.LINE;
         MODE drawMode = MODE.DRAW;
 
         public static Shape selectedShape = null;
@@ -121,7 +121,7 @@ namespace MyPaint
         private void drawLine(object sender, RoutedEventArgs e)
         {
             RemoveAdorner();
-            drawWhat = SHAPE.LINE;
+            drawWhat = TypeShape.SHAPE.LINE;
             shapeToggleButtonManager.CheckButton(tglbtnLine);
             //tglbtnEllipse.IsChecked = false;
             //tglbtnRectangle.IsChecked = false;
@@ -136,7 +136,7 @@ namespace MyPaint
         private void drawRectangle(object sender, RoutedEventArgs e)
         {
             RemoveAdorner();
-            drawWhat = SHAPE.RECTANGLE;
+            drawWhat = TypeShape.SHAPE.RECTANGLE;
             shapeToggleButtonManager.CheckButton(tglbtnRectangle);
             //tglbtnEllipse.IsChecked = false;
             //tglbtnLine.IsChecked = false;
@@ -147,11 +147,11 @@ namespace MyPaint
                 drawMode = MODE.DRAW;
         }
 
-        // Đánh dấu đối tượng sẽ vẽ là hình e líp
+        // Đánh dấu đối tượng sẽ vẽ là hình elíp
         private void drawEllipse(object sender, RoutedEventArgs e)
         {
             RemoveAdorner();
-            drawWhat = SHAPE.ELLIPSE;
+            drawWhat = TypeShape.SHAPE.ELLIPSE;
             shapeToggleButtonManager.CheckButton(tglbtnEllipse);
             //tglbtnRectangle.IsChecked = false;
             //tglbtnLine.IsChecked = false;
@@ -166,14 +166,14 @@ namespace MyPaint
         private void drawArrow()
         {
             RemoveAdorner();
-            drawWhat = SHAPE.ARROW;
+            drawWhat = TypeShape.SHAPE.ARROW;
             shapeToggleButtonManager.CheckButton(null);
-            tglbtnRectangle.IsChecked = false;
-            tglbtnEllipse.IsChecked = false;
-            tglbtnLine.IsChecked = false;
-            tglbtnText.IsChecked = false;
-            tglbtnImage.IsChecked = false;
-            tglbtnSelect.IsChecked = false;
+            //tglbtnRectangle.IsChecked = false;
+            //tglbtnEllipse.IsChecked = false;
+            //tglbtnLine.IsChecked = false;
+            //tglbtnText.IsChecked = false;
+            //tglbtnImage.IsChecked = false;
+            //tglbtnSelect.IsChecked = false;
             if (drawMode == MODE.SELECT)
                 drawMode = MODE.DRAW;
         }
@@ -182,7 +182,7 @@ namespace MyPaint
         private void drawTriangle()
         {
             RemoveAdorner();
-            drawWhat = SHAPE.TRIANGLE;
+            drawWhat = TypeShape.SHAPE.TRIANGLE;
             shapeToggleButtonManager.CheckButton(null);
             //tglbtnRectangle.IsChecked = false;
             //tglbtnEllipse.IsChecked = false;
@@ -198,7 +198,7 @@ namespace MyPaint
         private void drawStar()
         {
             RemoveAdorner();
-            drawWhat = SHAPE.STAR;
+            drawWhat = TypeShape.SHAPE.STAR;
             shapeToggleButtonManager.CheckButton(null);
             //tglbtnRectangle.IsChecked = false;
             //tglbtnEllipse.IsChecked = false;
@@ -214,7 +214,7 @@ namespace MyPaint
         private void drawHeart()
         {
             RemoveAdorner();
-            drawWhat = SHAPE.HEART;
+            drawWhat = TypeShape.SHAPE.HEART;
             shapeToggleButtonManager.CheckButton(null);
             //tglbtnRectangle.IsChecked = false;
             //tglbtnEllipse.IsChecked = false;
@@ -280,47 +280,8 @@ namespace MyPaint
                     RemoveAdorner();
                 }
 
-                // Xác định đối tượng sẽ vẽ
-                switch (drawWhat)
-                {
-                    case SHAPE.LINE:
-                        if (myShape == null)
-                            myShape = new MyLine();
-                        break;
-
-                    case SHAPE.RECTANGLE:
-                        if (myShape == null)
-                            myShape = new MyRectangle();
-                        break;
-
-                    case SHAPE.ELLIPSE:
-                        if (myShape == null)
-                            myShape = new MyEllipse();
-                        break;
-
-                    case SHAPE.ARROW:
-                        if (myShape == null)
-                            myShape = new MyArrow();
-                        break;
-
-                    case SHAPE.TRIANGLE:
-                        if (myShape == null)
-                            myShape = new MyTriangle();
-                        break;
-
-                    case SHAPE.HEART:
-                        if (myShape == null)
-                            myShape = new MyHeart();
-                        break;
-
-                    case SHAPE.STAR:
-                        if (myShape == null)
-                            myShape = new MyStar();
-                        break;
-
-                    default:
-                        break;
-                }
+                // Dùng lớp ShapeFactory để tạo ra đối tượng hình theo ý muốn.
+                myShape = ShapeFacTory.ProduceShape(drawWhat);
             }
 
             // Nếu ở chế độ chọn
