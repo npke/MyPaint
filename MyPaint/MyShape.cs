@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-
+using System.Windows.Shapes;
 
 namespace MyPaint
 {
@@ -38,10 +38,47 @@ namespace MyPaint
         public UIElement DrawedElement { get; set; }
 
         // Phương thức vẽ khi di chuyển chuột
-        public abstract void DrawOnMouseMove(UIElementCollection collection, bool shiftKeyPressed);
+        public abstract void DrawOnMouseMove(UIElementCollection collection, bool shiftKey);
 
         // Phương thức vẽ khi nhả chuột
-        public abstract void DrawOnMouseUp(UIElementCollection collection, bool shiftKeyPressed);
+        public abstract void DrawOnMouseUp(UIElementCollection collection, bool shiftKey);
+
+        // Phương thức vẽ đối tượng
+        public virtual void Draw(Shape shape, bool shiftKey)
+        {
+            // Xác định tọa độ góc trên bên trái
+            var x = Math.Min(StartPoint.X, EndPoint.X);
+            var y = Math.Min(StartPoint.Y, EndPoint.Y);
+
+            // Xác định chiều dài, độ rộng của hình
+            var w = Math.Max(StartPoint.X, EndPoint.X) - x;
+            var h = Math.Max(StartPoint.Y, EndPoint.Y) - y;
+
+            // Kiểm tra người dùng có đang nhấn phím Shift
+            if (shiftKey)
+            {
+                // Nếu có thực hiện vẽ hình vuông
+                shape.Width = h;
+                shape.Height = h;
+            }
+            else
+            {
+                shape.Width = w;
+                shape.Height = h;
+            }
+
+            // Các thuộc tính của đối tượng vẽ
+            shape.Stroke = StrokeBrush;
+            shape.Fill = FillBrush;
+            shape.StrokeThickness = StrokeThickness;
+
+            // Kiểu nét vẽ
+            shape.StrokeDashArray = DashCollection;
+
+            // Định vị trên canvas
+            Canvas.SetTop(shape, StartPoint.Y < EndPoint.Y ? StartPoint.Y : (StartPoint.Y - shape.Height));
+            Canvas.SetLeft(shape, StartPoint.X < EndPoint.X ? StartPoint.X : (StartPoint.X - shape.Width));
+        }
 
         // Constructor
         public MyShape()

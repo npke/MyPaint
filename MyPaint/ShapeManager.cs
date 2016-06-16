@@ -38,7 +38,7 @@ namespace MyPaint
         public static MyShape CloneShape(TypeShape.SHAPE prams)
         { 
             // Xem thuộc tính khởi tạo của đối tượng trong MainWindow để define clone
-            return null
+            return null;
         }
       
 

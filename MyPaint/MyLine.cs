@@ -14,7 +14,7 @@ namespace MyPaint
         private Line lastLine, line;
 
         // Vẽ khi chuột nhấn giữ chuột và di chuyển (vẽ xem trước)
-        public override void DrawOnMouseMove(System.Windows.Controls.UIElementCollection collection, bool shiftKeyPressed)
+        public override void DrawOnMouseMove(System.Windows.Controls.UIElementCollection collection, bool shiftKey)
         {
             bool add = false;
 
@@ -34,7 +34,7 @@ namespace MyPaint
 
 
         // Vẽ đối tượng thật sự cuối cùng khi nhả chuột
-        public override void DrawOnMouseUp(System.Windows.Controls.UIElementCollection collection, bool shiftKeyPressed)
+        public override void DrawOnMouseUp(System.Windows.Controls.UIElementCollection collection, bool shiftKey)
         {
             // Khởi tạo một line mới
             line = new Line();
