@@ -15,31 +15,7 @@ namespace MyPaint
         private static Dictionary<int, MyShape> 
                         shapeList = new Dictionary<int, MyShape>();
 
-        // Protoypes shape
-        private static Dictionary<ShapeType.SHAPE, MyShape> Prototypes = new Dictionary<ShapeType.SHAPE, MyShape>();
-
-        public static void PopulateAllShapeInstances()
-        {
-            var ListType =  Enum.GetValues(typeof(ShapeType.SHAPE));
-            foreach (ShapeType.SHAPE item in ListType)
-                CreateInstanceOf(item);
-          
-        }
-
-
-        // Hàm tạo mới một shape và add vào danh sách prototype 
-        private static void CreateInstanceOf(ShapeType.SHAPE item)
-        {
-            MyShape ms = ShapeFactory.ProduceShape(item);
-            Prototypes.Add(item, ms);
-        }
-
-        // Hàm nhân bản hình
-        public static MyShape CloneShape(ShapeType.SHAPE prams)
-        { 
-            // Xem thuộc tính khởi tạo của đối tượng trong MainWindow để define clone
-            return null;
-        }
+        
       
 
 

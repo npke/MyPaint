@@ -71,6 +71,7 @@ namespace MyPaint
             InitializeComponent();
             InitializeShape();
             AddShapeToggleButton();
+            ShapeFactory.PopulateAllShapeInstances();
         }
 
         private void AddShapeToggleButton()
@@ -216,7 +217,7 @@ namespace MyPaint
 
                 // Dùng lớp ShapeFactory để tạo ra đối tượng hình theo ý muốn.
                 Point position = e.GetPosition(drawingCanvas);
-                myShape = ShapeFactory.ProduceShape(shapeToDraw);
+                myShape = ShapeFactory.CloneShape(shapeToDraw);
                 myShape.StartPoint = position;
                 myShape.EndPoint = position;
                 myShape.Draw(drawingCanvas.Children);
