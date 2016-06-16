@@ -7,42 +7,42 @@ namespace MyPaint
 {
     
 
-    public class ShapeFacTory
+    public class ShapeFactory
     {
          
         // Hàm tạo và trả về đối tượng hình tùy thuộc kiểu SHAPE
-        public static MyShape ProduceShape(TypeShape.SHAPE Sh)
+        public static MyShape ProduceShape(ShapeType.SHAPE Sh)
         {
             
             MyShape result =  null;
             // Xác định đối tượng sẽ vẽ
             switch (Sh)
             {
-                case TypeShape.SHAPE.LINE:
+                case ShapeType.SHAPE.LINE:
                     result = new MyLine();
                     break;
 
-                case TypeShape.SHAPE.RECTANGLE:
+                case ShapeType.SHAPE.RECTANGLE:
                     result = new MyRectangle();
                     break;
 
-                case TypeShape.SHAPE.ELLIPSE:
+                case ShapeType.SHAPE.ELLIPSE:
                     result = new MyEllipse();
                     break;
 
-                case TypeShape.SHAPE.ARROW:
+                case ShapeType.SHAPE.ARROW:
                     result = new MyArrow();
                     break;
 
-                case TypeShape.SHAPE.TRIANGLE:
+                case ShapeType.SHAPE.TRIANGLE:
                     result = new MyTriangle();
                     break;
 
-                case TypeShape.SHAPE.HEART:
+                case ShapeType.SHAPE.HEART:
                     result = new MyHeart();
                     break;
 
-                case TypeShape.SHAPE.STAR:
+                case ShapeType.SHAPE.STAR:
                     result = new MyStar();
                     break;
 

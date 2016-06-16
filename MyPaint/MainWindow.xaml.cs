@@ -45,7 +45,7 @@ namespace MyPaint
         
         enum MODE { DRAW = 1, SELECT = 2 }
 
-        TypeShape.SHAPE shapeToDraw = TypeShape.SHAPE.LINE;
+        ShapeType.SHAPE shapeToDraw = ShapeType.SHAPE.LINE;
         MODE drawMode = MODE.DRAW;
 
         public static Shape selectedShape = null;
@@ -113,46 +113,46 @@ namespace MyPaint
         // Đánh dấu đối tượng sẽ vẽ là đường thằng
         private void drawLine(object sender, RoutedEventArgs e)
         {
-            drawShape(TypeShape.SHAPE.LINE, tglbtnLine);
+            drawShape(ShapeType.SHAPE.LINE, tglbtnLine);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình chữ nhật
         private void drawRectangle(object sender, RoutedEventArgs e)
         {
-            drawShape(TypeShape.SHAPE.RECTANGLE, tglbtnRectangle);
+            drawShape(ShapeType.SHAPE.RECTANGLE, tglbtnRectangle);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình elíp
         private void drawEllipse(object sender, RoutedEventArgs e)
         {
-            drawShape(TypeShape.SHAPE.ELLIPSE, tglbtnEllipse);
+            drawShape(ShapeType.SHAPE.ELLIPSE, tglbtnEllipse);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình mũi tên
         private void drawArrow()
         {
-            drawShape(TypeShape.SHAPE.ARROW, null);
+            drawShape(ShapeType.SHAPE.ARROW, null);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình tam giác
         private void drawTriangle()
         {
-            drawShape(TypeShape.SHAPE.TRIANGLE, null);
+            drawShape(ShapeType.SHAPE.TRIANGLE, null);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình ngôi sao
         private void drawStar()
         {
-            drawShape(TypeShape.SHAPE.STAR, null);
+            drawShape(ShapeType.SHAPE.STAR, null);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình trái tim
         private void drawHeart()
         {
-            drawShape(TypeShape.SHAPE.HEART, null);
+            drawShape(ShapeType.SHAPE.HEART, null);
         }
 
-        private void drawShape(TypeShape.SHAPE shape, ToggleButton tglBtnShape)
+        private void drawShape(ShapeType.SHAPE shape, ToggleButton tglBtnShape)
         {
             RemoveAdorner();
             shapeToDraw = shape;
@@ -216,7 +216,7 @@ namespace MyPaint
 
                 // Dùng lớp ShapeFactory để tạo ra đối tượng hình theo ý muốn.
                 Point position = e.GetPosition(drawingCanvas);
-                myShape = ShapeFacTory.ProduceShape(shapeToDraw);
+                myShape = ShapeFactory.ProduceShape(shapeToDraw);
                 myShape.StartPoint = position;
                 myShape.EndPoint = position;
                 myShape.Draw(drawingCanvas.Children);
