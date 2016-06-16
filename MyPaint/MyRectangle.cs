@@ -16,8 +16,6 @@ namespace MyPaint
     {
         public override void Draw(UIElementCollection collection)
         {
-            base.Draw(collection);
-
             Rectangle rectangle;
             if (DrawedElement == null)
                 rectangle = new Rectangle();

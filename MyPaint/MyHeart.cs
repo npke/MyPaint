@@ -9,8 +9,6 @@ namespace MyPaint
 {
     class MyHeart : MyShape
     {
-        private Heart lastHeart, heart;
-
         public override void Draw(UIElementCollection collection)
         {
             Heart heart;
