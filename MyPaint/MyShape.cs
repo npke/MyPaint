@@ -48,7 +48,8 @@ namespace MyPaint
         // Phương thức vẽ
         public virtual void Draw(System.Windows.Controls.UIElementCollection collection)
         {
-
+            if (DrawedElement == null && EndPoint.X == 0 && EndPoint.Y == 0)
+                return;
         }
 
         // Phương thức update các thuộc tính cho một hình vẽ

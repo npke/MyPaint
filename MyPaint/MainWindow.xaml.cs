@@ -29,8 +29,8 @@ namespace MyPaint
     {
         // Hình sẽ vẽ
         MyShape myShape;
-       
-        // Các đối tượng là tham số đầu vào khi vẽ một hình
+
+        // Các đối tượng là tham số đầu vào/thuộc tính khi vẽ một hình
         Point startPoint, endPoint;
         Brush strokeBrush, fillBrush, textBrush;
         double strokeThickness, top, left;
@@ -45,7 +45,7 @@ namespace MyPaint
         
         enum MODE { DRAW = 1, SELECT = 2 }
 
-        TypeShape.SHAPE drawWhat = TypeShape.SHAPE.LINE;
+        TypeShape.SHAPE shapeToDraw = TypeShape.SHAPE.LINE;
         MODE drawMode = MODE.DRAW;
 
         public static Shape selectedShape = null;
@@ -63,9 +63,9 @@ namespace MyPaint
         int iPaste = 0;
         double iLeft = 0, iTop = 0;
 
-
         // Đối tượng quản lý các shape toggle button
         private ToggleButtonManager shapeToggleButtonManager = new ToggleButtonManager();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -100,19 +100,12 @@ namespace MyPaint
 		// Chế độ chọn
         private void setDrawMode(object sender, RoutedEventArgs e)
         {
-            if (drawMode == MODE.SELECT)
-            {
-                drawMode = MODE.DRAW;
-            }
+            if (tglbtnSelect.IsChecked == true)
+                drawMode = MODE.SELECT;
             else
             {
-                drawMode = MODE.SELECT;
-                tglbtnEllipse.IsChecked = false;
-                tglbtnRectangle.IsChecked = false;
-                tglbtnText.IsChecked = false;
-                tglbtnImage.IsChecked = false;
-                tglbtnLine.IsChecked = false;
-
+                drawMode = MODE.DRAW;
+                shapeToggleButtonManager.CheckButton(null);
             }
         }
 
@@ -120,110 +113,51 @@ namespace MyPaint
         // Đánh dấu đối tượng sẽ vẽ là đường thằng
         private void drawLine(object sender, RoutedEventArgs e)
         {
-            RemoveAdorner();
-            drawWhat = TypeShape.SHAPE.LINE;
-            shapeToggleButtonManager.CheckButton(tglbtnLine);
-            //tglbtnEllipse.IsChecked = false;
-            //tglbtnRectangle.IsChecked = false;
-            //tglbtnText.IsChecked = false;
-            //tglbtnImage.IsChecked = false;
-            //tglbtnSelect.IsChecked = false;
-            if (drawMode == MODE.SELECT)
-                drawMode = MODE.DRAW;
+            drawShape(TypeShape.SHAPE.LINE, tglbtnLine);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình chữ nhật
         private void drawRectangle(object sender, RoutedEventArgs e)
         {
-            RemoveAdorner();
-            drawWhat = TypeShape.SHAPE.RECTANGLE;
-            shapeToggleButtonManager.CheckButton(tglbtnRectangle);
-            //tglbtnEllipse.IsChecked = false;
-            //tglbtnLine.IsChecked = false;
-            //tglbtnText.IsChecked = false;
-            //tglbtnImage.IsChecked = false;
-            //tglbtnSelect.IsChecked = false;
-            if (drawMode == MODE.SELECT)
-                drawMode = MODE.DRAW;
+            drawShape(TypeShape.SHAPE.RECTANGLE, tglbtnRectangle);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình elíp
         private void drawEllipse(object sender, RoutedEventArgs e)
         {
-            RemoveAdorner();
-            drawWhat = TypeShape.SHAPE.ELLIPSE;
-            shapeToggleButtonManager.CheckButton(tglbtnEllipse);
-            //tglbtnRectangle.IsChecked = false;
-            //tglbtnLine.IsChecked = false;
-            //tglbtnText.IsChecked = false;
-            //tglbtnImage.IsChecked = false;
-            //tglbtnSelect.IsChecked = false;
-            if (drawMode == MODE.SELECT)
-                drawMode = MODE.DRAW;
+            drawShape(TypeShape.SHAPE.ELLIPSE, tglbtnEllipse);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình mũi tên
         private void drawArrow()
         {
-            RemoveAdorner();
-            drawWhat = TypeShape.SHAPE.ARROW;
-            shapeToggleButtonManager.CheckButton(null);
-            //tglbtnRectangle.IsChecked = false;
-            //tglbtnEllipse.IsChecked = false;
-            //tglbtnLine.IsChecked = false;
-            //tglbtnText.IsChecked = false;
-            //tglbtnImage.IsChecked = false;
-            //tglbtnSelect.IsChecked = false;
-            if (drawMode == MODE.SELECT)
-                drawMode = MODE.DRAW;
+            drawShape(TypeShape.SHAPE.ARROW, null);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình tam giác
         private void drawTriangle()
         {
-            RemoveAdorner();
-            drawWhat = TypeShape.SHAPE.TRIANGLE;
-            shapeToggleButtonManager.CheckButton(null);
-            //tglbtnRectangle.IsChecked = false;
-            //tglbtnEllipse.IsChecked = false;
-            //tglbtnLine.IsChecked = false;
-            //tglbtnText.IsChecked = false;
-            //tglbtnImage.IsChecked = false;
-            //tglbtnSelect.IsChecked = false;
-            if (drawMode == MODE.SELECT)
-                drawMode = MODE.DRAW;
+            drawShape(TypeShape.SHAPE.TRIANGLE, null);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình ngôi sao
         private void drawStar()
         {
-            RemoveAdorner();
-            drawWhat = TypeShape.SHAPE.STAR;
-            shapeToggleButtonManager.CheckButton(null);
-            //tglbtnRectangle.IsChecked = false;
-            //tglbtnEllipse.IsChecked = false;
-            //tglbtnLine.IsChecked = false;
-            //tglbtnText.IsChecked = false;
-            //tglbtnImage.IsChecked = false;
-            //tglbtnSelect.IsChecked = false;
-            if (drawMode == MODE.SELECT)
-                drawMode = MODE.DRAW;
+            drawShape(TypeShape.SHAPE.STAR, null);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình trái tim
         private void drawHeart()
         {
+            drawShape(TypeShape.SHAPE.HEART, null);
+        }
+
+        private void drawShape(TypeShape.SHAPE shape, ToggleButton tglBtnShape)
+        {
             RemoveAdorner();
-            drawWhat = TypeShape.SHAPE.HEART;
-            shapeToggleButtonManager.CheckButton(null);
-            //tglbtnRectangle.IsChecked = false;
-            //tglbtnEllipse.IsChecked = false;
-            //tglbtnLine.IsChecked = false;
-            //tglbtnText.IsChecked = false;
-            //tglbtnImage.IsChecked = false;
-            //tglbtnSelect.IsChecked = false;
-            if (drawMode == MODE.SELECT)
-                drawMode = MODE.DRAW;
+            shapeToDraw = shape;
+            shapeToggleButtonManager.CheckButton(tglBtnShape);
+            drawMode = MODE.DRAW;
         }
 
         // Xử lý khi bấm chuột trên canvas
@@ -282,8 +216,9 @@ namespace MyPaint
 
                 // Dùng lớp ShapeFactory để tạo ra đối tượng hình theo ý muốn.
                 Point position = e.GetPosition(drawingCanvas);
-                myShape = ShapeFacTory.ProduceShape(drawWhat);
+                myShape = ShapeFacTory.ProduceShape(shapeToDraw);
                 myShape.StartPoint = position;
+                myShape.EndPoint = position;
                 myShape.Draw(drawingCanvas.Children);
             }
 
@@ -538,15 +473,11 @@ namespace MyPaint
 			
 			// Bấm - để giảm ZIndex của một đối tượng trong canvas
             if (e.Key == Key.Subtract && selectedUIElement != null)
-            {
                 Canvas.SetZIndex(selectedUIElement, Canvas.GetZIndex(selectedUIElement) - 1);
-            }
 			
 			// Bấm + để tăng ZIndex của một đối tượng trong canvas
             if (e.Key == Key.Add && selectedUIElement != null)
-            {
                 Canvas.SetZIndex(selectedUIElement, Canvas.GetZIndex(selectedUIElement) + 1);
-            }
         }
 
         // Phương thức cho phép người dùng chọn một màu từ bảng màu
@@ -632,32 +563,21 @@ namespace MyPaint
                 return;
 
             if (uiElement is Line)
-            {
                 adornerLayer.Add(new ResizingLineAdorner(uiElement));
-            }
             else
-            {
                 adornerLayer.Add(new ResizingAdorner(uiElement));
-            }
 
             selectedUIElement = uiElement;
             if (uiElement is Shape)
-            {
                 selectedShape = (Shape)uiElement;
-            }
             else if (uiElement is TextBox)
-            {
                 selectedTextBox = (TextBox)uiElement;
-            }
         }
 		
 		// Phương thức thêm văn bản vào canvas
         private void addText(double Top, double Left)
         {
-            tglbtnEllipse.IsChecked = false;
-            tglbtnLine.IsChecked = false;
-            tglbtnImage.IsChecked = false;
-            tglbtnRectangle.IsChecked = false;
+            shapeToggleButtonManager.CheckButton(null);
 
             drawMode = MODE.SELECT;
             tglbtnSelect.IsChecked = true;
