@@ -11,61 +11,37 @@ namespace MyPaint
 {
     class MyLine : MyShape
     {
-        private Line lastLine, line;
-
-        // Vẽ khi chuột nhấn giữ chuột và di chuyển (vẽ xem trước)
-        public override void DrawOnMouseMove(System.Windows.Controls.UIElementCollection collection, bool shiftKey)
+        public override void Draw(UIElementCollection collection)
         {
-            bool add = false;
+            Line line;
+            if (DrawedElement == null)
+                line = new Line();
+            else line = (Line)DrawedElement;
 
-            if (lastLine == null)
-            {
-                lastLine = new Line();
-                add = true;
-            }
+            UpdateProperties(line);
 
-            // Gán các thuộc tính
-            SetProperties(lastLine);
-
-            // Thêm vào canvas
-            if (add && !StartPoint.Equals(EndPoint))
-                collection.Add(lastLine);
-        }
-
-
-        // Vẽ đối tượng thật sự cuối cùng khi nhả chuột
-        public override void DrawOnMouseUp(System.Windows.Controls.UIElementCollection collection, bool shiftKey)
-        {
-            // Khởi tạo một line mới
-            line = new Line();
-
-            // Thiết lập các thuộc tính
-            SetProperties(line);
-
-            // Xóa bỏ đối tượng vẽ xem trước và thêm đối tượng thật sự vào canvas
-            collection.Remove(lastLine);
-            if (!StartPoint.Equals(EndPoint))
-            {
+            if (DrawedElement == null)
                 collection.Add(line);
-                DrawedElement = line;
-            }
+
+            DrawedElement = line;
         }
 
-        private void SetProperties(Line xLine)
+        public override void UpdateProperties(Shape shape)
         {
+            Line line = (Line)shape;
             // Điểm đầu
-            xLine.X1 = StartPoint.X;
-            xLine.Y1 = StartPoint.Y;
+            line.X1 = StartPoint.X;
+            line.Y1 = StartPoint.Y;
 
             // Điểm cuối
-            xLine.X2 = EndPoint.X;
-            xLine.Y2 = EndPoint.Y;
+            line.X2 = EndPoint.X;
+            line.Y2 = EndPoint.Y;
 
-            xLine.Stroke = StrokeBrush;
-            xLine.StrokeThickness = StrokeThickness;
+            line.Stroke = StrokeBrush;
+            line.StrokeThickness = StrokeThickness;
 
             // Kiểu nét vẽ
-            xLine.StrokeDashArray = DashCollection;
+            line.StrokeDashArray = DashCollection;
         }
     }
 }

@@ -281,7 +281,10 @@ namespace MyPaint
                 }
 
                 // Dùng lớp ShapeFactory để tạo ra đối tượng hình theo ý muốn.
+                Point position = e.GetPosition(drawingCanvas);
                 myShape = ShapeFacTory.ProduceShape(drawWhat);
+                myShape.StartPoint = position;
+                myShape.Draw(drawingCanvas.Children);
             }
 
             // Nếu ở chế độ chọn
@@ -372,7 +375,7 @@ namespace MyPaint
                 myShape.DashCollection = dashCollection;
 
                 // Gọi hàm vẽ đối tượng tương ứng, đây là đối tượng xem trước
-                myShape.DrawOnMouseMove(drawingCanvas.Children, shiftKeyPressed);
+                myShape.Draw(drawingCanvas.Children);
             }
 
             // Nếu ở chế độ chọn => cho phép di chuyển, thay đổi kích thước
@@ -487,7 +490,7 @@ namespace MyPaint
 
                     try
                     {
-                        myShape.DrawOnMouseUp(drawingCanvas.Children, shiftKeyPressed);
+                        //myShape.DrawOnMouseUp(drawingCanvas.Children, shiftKeyPressed);
                         if (myShape.DrawedElement == null)
                             return;
 

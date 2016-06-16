@@ -11,37 +11,18 @@ namespace MyPaint
     {
         private Heart lastHeart, heart;
 
-        // Vẽ khi chuột nhấn giữ chuột và di chuyển (vẽ xem trước)
-        public override void DrawOnMouseMove(System.Windows.Controls.UIElementCollection collection, bool shiftKey)
+        public override void Draw(UIElementCollection collection)
         {
-            bool add = false;
+            Heart heart;
+            if (DrawedElement == null)
+                heart = new Heart();
+            else heart = (Heart)DrawedElement;
 
-            if (lastHeart == null)
-            {
-                lastHeart = new Heart();
-                add = true;
-            }
+            UpdateProperties(heart);
+            LocateShapeOnCanvas(heart);
 
-            // Vẽ đối tượng xem trước
-            Draw(lastHeart, shiftKey);
-
-            // Thêm vào canvas
-            if (add)
-                collection.Add(lastHeart);
-        }
-
-        // Phương thức vẽ đối tượng cuối cùng thực sự khi nhả chuột
-        public override void DrawOnMouseUp(System.Windows.Controls.UIElementCollection collection, bool shiftKey)
-        {
-            heart = new Heart();
-
-            // Vẽ đối tượng thực sự
-            Draw(heart, shiftKey);
-
-            // Xóa đối tượng vẽ xem trước và thêm đối tượng thật sự vào canvas
-            collection.Remove(lastHeart);
-            collection.Add(heart);
-
+            if (DrawedElement == null)
+                collection.Add(heart);
             DrawedElement = heart;
         }
     }

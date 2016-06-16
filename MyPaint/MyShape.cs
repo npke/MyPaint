@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Input;
 
 namespace MyPaint
 {
@@ -37,14 +38,21 @@ namespace MyPaint
         // Đối tượng đã vẽ
         public UIElement DrawedElement { get; set; }
 
-        // Phương thức vẽ khi di chuyển chuột
-        public abstract void DrawOnMouseMove(UIElementCollection collection, bool shiftKey);
+        // Constructor
+        public MyShape()
+        {
+            this.Handle = ShapeManager.GetNextHandle();
+            ShapeManager.AddShape(this);
+        }
 
-        // Phương thức vẽ khi nhả chuột
-        public abstract void DrawOnMouseUp(UIElementCollection collection, bool shiftKey);
+        // Phương thức vẽ
+        public virtual void Draw(System.Windows.Controls.UIElementCollection collection)
+        {
 
-        // Phương thức vẽ đối tượng
-        public virtual void Draw(Shape shape, bool shiftKey)
+        }
+
+        // Phương thức update các thuộc tính cho một hình vẽ
+        public virtual void UpdateProperties(Shape shape)
         {
             // Xác định tọa độ góc trên bên trái
             var x = Math.Min(StartPoint.X, EndPoint.X);
@@ -55,7 +63,7 @@ namespace MyPaint
             var h = Math.Max(StartPoint.Y, EndPoint.Y) - y;
 
             // Kiểm tra người dùng có đang nhấn phím Shift
-            if (shiftKey)
+            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
                 // Nếu có thực hiện vẽ hình vuông
                 shape.Width = h;
@@ -74,17 +82,13 @@ namespace MyPaint
 
             // Kiểu nét vẽ
             shape.StrokeDashArray = DashCollection;
+        }
 
+        public virtual void LocateShapeOnCanvas(Shape shape)
+        {
             // Định vị trên canvas
             Canvas.SetTop(shape, StartPoint.Y < EndPoint.Y ? StartPoint.Y : (StartPoint.Y - shape.Height));
             Canvas.SetLeft(shape, StartPoint.X < EndPoint.X ? StartPoint.X : (StartPoint.X - shape.Width));
-        }
-
-        // Constructor
-        public MyShape()
-        {
-            this.Handle = ShapeManager.GetNextHandle();
-            ShapeManager.AddShape(this);
         }
 
         // Phương thức xóa bỏ đối tượng đã vẽ

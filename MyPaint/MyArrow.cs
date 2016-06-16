@@ -9,39 +9,18 @@ namespace MyPaint
 {
     class MyArrow : MyShape
     {
-        private Arrow lastArrow, arrow;
-
-        // Vẽ khi chuột nhấn giữ chuột và di chuyển (vẽ xem trước)
-        public override void DrawOnMouseMove(System.Windows.Controls.UIElementCollection collection, bool shiftKey)
+        public override void Draw(UIElementCollection collection)
         {
-            bool add = false;
+            Arrow arrow;
+            if (DrawedElement == null)
+                arrow = new Arrow();
+            else arrow = (Arrow)DrawedElement;
 
-            if (lastArrow == null)
-            {
-                lastArrow = new Arrow();
-                add = true;
-            }
+            UpdateProperties(arrow);
+            LocateShapeOnCanvas(arrow);
 
-            // Vẽ đối tượng xem trước
-            Draw(lastArrow, shiftKey);
-
-            // Thêm vào canvas
-            if (add)
-                collection.Add(lastArrow);
-        }
-
-        // Phương thức vẽ đối tượng cuối cùng thực sự khi nhả chuột
-        public override void DrawOnMouseUp(System.Windows.Controls.UIElementCollection collection, bool shiftKey)
-        {
-            arrow = new Arrow();
-
-            // Vẽ đối tượng thực sự
-            Draw(arrow, shiftKey);
-
-            // Xóa đối tượng vẽ xem trước và thêm đối tượng thật sự vào canvas
-            collection.Remove(lastArrow);
-            collection.Add(arrow);
-
+            if (DrawedElement == null)
+                collection.Add(arrow);
             DrawedElement = arrow;
         }
     }

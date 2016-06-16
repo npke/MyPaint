@@ -11,39 +11,18 @@ namespace MyPaint
 {
     public class MyEllipse : MyShape
     {
-        Ellipse lastEllipse, ellipse;
-
-        // Vẽ hình ellipse xem trước khi di chuyển chuột 
-        public override void DrawOnMouseMove(System.Windows.Controls.UIElementCollection collection, bool shiftKey)
+        public override void Draw(UIElementCollection collection)
         {
-            bool add = false;
+            Ellipse ellipse;
+            if (DrawedElement == null)
+                ellipse = new Ellipse();
+            else ellipse = (Ellipse)DrawedElement;
 
-            if (lastEllipse == null)
-            {
-                lastEllipse = new Ellipse();
-                add = true;
-            }
+            UpdateProperties(ellipse);
+            LocateShapeOnCanvas(ellipse);
 
-            // Vẽ đối tượng xem trước
-            Draw(lastEllipse, shiftKey);
-           	
-           	// Thêm vào canvas
-            if (add)
-                collection.Add(lastEllipse);
-        }
-
-        // Phương thức vẽ đối tượng cuối cùng thực sự khi nhả chuột
-        public override void DrawOnMouseUp(System.Windows.Controls.UIElementCollection collection, bool shiftKey)
-        {
-            ellipse = new Ellipse();
-
-            // Vẽ đối tượng thực sự
-            Draw(ellipse, shiftKey);
-
-            // Xóa đối tượng vẽ xem trước và thêm đối tượng thật sự vào canvas
-            collection.Remove(lastEllipse);
-            collection.Add(ellipse);
-
+            if (DrawedElement == null)
+                collection.Add(ellipse);
             DrawedElement = ellipse;
         }
     } 
