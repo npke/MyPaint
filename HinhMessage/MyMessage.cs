@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Drawing;
 using MyPaintPlugin;
+using System.Windows.Controls;
 
 namespace HinhMessage
 {
     public class MyMessage : MyShape
     {
-        public override void Draw(System.Windows.Controls.UIElementCollection collection)
+        public override void Draw(UIElementCollection collection)
         {
             RectangularCallout callout;
             if (DrawedElement == null)

@@ -1325,12 +1325,12 @@ namespace MyPaint
             foreach (FileInfo fileInfo in fis)
             {
                 var domain = AppDomain.CurrentDomain;
-                Assembly assembly = domain.Load(AssemblyName.GetAssemblyName(fileInfo.FullName));
+                Assembly assembly = domain
+                    .Load(AssemblyName.GetAssemblyName(fileInfo.FullName));
 
                 // Get all of the types in the dll
                 Type[] types = assembly.GetTypes();
 
-                // Only create instance of concrete class that inherits from IPluginContract
                 foreach (var type in types)
                 {
                     if (type.IsClass &&

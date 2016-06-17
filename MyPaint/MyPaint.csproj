@@ -72,7 +72,6 @@
     <Compile Include="Star.cs" />
     <Compile Include="ToggleButtonManager.cs" />
     <Compile Include="Triangle.cs" />
-    <Compile Include="ShapeType.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
