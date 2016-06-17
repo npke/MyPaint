@@ -61,3 +61,5 @@ C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-win
 C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.g.resources
 C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.Properties.Resources.resources
 C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.csproj.GenerateResource.Cache
+D:\HCMUS\Term-06\Software-Architecture\Project\my-paint-windows\MyPaint\bin\Debug\MyPaintPlugin.dll
+D:\HCMUS\Term-06\Software-Architecture\Project\my-paint-windows\MyPaint\bin\Debug\MyPaintPlugin.pdb

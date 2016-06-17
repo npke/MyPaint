@@ -19,6 +19,8 @@ using System.Windows.Markup;
 using Microsoft.Win32;
 using System.Xml;
 using System.Windows.Controls.Primitives;
+using System.Reflection;
+using MyPaintPlugin;
 
 namespace MyPaint
 {
@@ -71,6 +73,7 @@ namespace MyPaint
             InitializeComponent();
             InitializeShape();
             AddShapeToggleButton();
+            loadPlugin();
         }
 
         private void AddShapeToggleButton()
@@ -1305,6 +1308,49 @@ namespace MyPaint
         private void heartShape_Click(object sender, RoutedEventArgs e)
         {
             drawHeart();
+        }
+
+        public void loadPlugin()
+        {
+            // Get list of DLL files in main executable folder
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string folder = System.IO.Path.GetDirectoryName(exePath) + "\\plugins";
+            FileInfo[] fis = new DirectoryInfo(folder).GetFiles("*.dll");
+
+            var plugins = new List<MyShape>();
+
+            // Load all assemblies from current working directory
+            foreach (FileInfo fileInfo in fis)
+            {
+                var domain = AppDomain.CurrentDomain;
+                Assembly assembly = domain.Load(AssemblyName.GetAssemblyName(fileInfo.FullName));
+
+                // Get all of the types in the dll
+                Type[] types = assembly.GetTypes();
+
+                // Only create instance of concrete class that inherits from IPluginContract
+                foreach (var type in types)
+                {
+                    if (type.IsClass &&
+                        typeof(MyShape).IsAssignableFrom(type))
+                    {
+                        plugins.Add(Activator.CreateInstance(type) as MyShape);
+                    }
+                }
+            }
+
+            // Invoke all the functions in all the dlls that we found
+            foreach (var plugin in plugins)
+            {
+                myShape = plugin;
+                customShapeMenu.Items.Add(plugin.ToString());
+                customShapeMenu.Click += new RoutedEventHandler(customShapeMenuClick);
+            }
+        }
+
+        public void customShapeMenuClick(Object sender, RoutedEventArgs e)
+        {
+            //drawShape(TypeShape.SHAPE.UPARROW, null);
         }
     }
 }
