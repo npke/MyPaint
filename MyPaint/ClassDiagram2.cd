@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MyPaint.App" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.Arrow" Collapsed="true">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Arrow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.Heart" Collapsed="true">
+    <Position X="20" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Heart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.MainWindow" Collapsed="true">
+    <Position X="21.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iBBCiiQkIINAFAEwgEBSUykhMM2N+kYWIkYYMTAaCFM=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.MyArrow" Collapsed="true">
+    <Position X="14" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyArrow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.MyEllipse" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyEllipse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.MyHeart" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyHeart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.MyLine" Collapsed="true">
+    <Position X="9.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.MyRectangle" Collapsed="true">
+    <Position X="9.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyRectangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.MyShape">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAABACAAQgAAAAAABAQAAgAAAAIAAAQAAAAAAgg=</HashCode>
+      <FileName>MyShape.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.MyStar" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyStar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.MyTriangle" Collapsed="true">
+    <Position X="9.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyTriangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.Options" Collapsed="true">
+    <Position X="16.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAQABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Options.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.ResizingAdorner" Collapsed="true">
+    <Position X="20" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQgAAQAABCIAJAAAQAAAQIAQAEAIgoAAAAAAICIAkAA=</HashCode>
+      <FileName>ResizingAdorner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.ResizingLineAdorner" Collapsed="true">
+    <Position X="21.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAIQQAEAAAoAAAAAAACAgAgA=</HashCode>
+      <FileName>ResizingLineAdorner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.ShapeFacTory" Collapsed="true">
+    <Position X="20" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>ShapeFacTory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.ShapeManager" Collapsed="true">
+    <Position X="21.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAIAAAAEAAAAAAAABAEAAAIAAAQAABAAEAAAA=</HashCode>
+      <FileName>ShapeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.PTDuongThang" Collapsed="true">
+    <Position X="18.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAQAAAAAAAAA=</HashCode>
+      <FileName>Star.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.Star" Collapsed="true">
+    <Position X="16.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Star.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.ToggleButtonManager" Collapsed="true">
+    <Position X="18.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAgAAAAAAAAAIAA=</HashCode>
+      <FileName>ToggleButtonManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.Triangle" Collapsed="true">
+    <Position X="20" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Triangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.TypeShape" Collapsed="true">
+    <Position X="21.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TypeShape.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.Properties.Resources" Collapsed="true">
+    <Position X="16.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyPaint.Properties.Settings" Collapsed="true">
+    <Position X="18.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

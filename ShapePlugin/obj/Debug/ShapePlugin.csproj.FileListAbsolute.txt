@@ -1,0 +1,5 @@
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\ShapePlugin\bin\Debug\ShapePlugin.dll
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\ShapePlugin\bin\Debug\ShapePlugin.pdb
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\ShapePlugin\obj\Debug\ShapePlugin.csprojResolveAssemblyReference.cache
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\ShapePlugin\obj\Debug\ShapePlugin.dll
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\ShapePlugin\obj\Debug\ShapePlugin.pdb

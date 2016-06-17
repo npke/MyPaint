@@ -294,11 +294,6 @@ namespace MyPaint
                 // Lấy ví trị chuột mỗi khi di chuyển
                 endPoint = e.GetPosition(drawingCanvas);
 
-                // Kiểm tra phím Shift có đang được bấm, dùng khi vẽ hình vuông & hình tròn
-                bool shiftKeyPressed = false;
-                if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-                    shiftKeyPressed = true;
-
                 // ??? Chuyển thành hàm, chỉnh lại thông số
                 // Thiết lập các thuộc tính cho đối tượng cần vẽ
                 if (startPoint.Equals(endPoint))
@@ -413,10 +408,6 @@ namespace MyPaint
             if (drawMode == MODE.DRAW)
             {
                 endPoint = e.GetPosition(drawingCanvas);
-                bool shiftKeyPressed = false;
-
-                if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-                    shiftKeyPressed = true;
 
                 // Vẽ đối tượng với các thông số cuối cùng lên canvas
                 if (selectedUIElement == null)
