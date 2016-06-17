@@ -56,9 +56,9 @@ namespace MyPaint
 
         public static AdornerLayer adornerLayer;
 
-        // Các stack phục vụ mục đích undo và redo
-        public static Stack<List<UIElement>> UndoStack = new Stack<List<UIElement>>();
-        public static Stack<List<UIElement>> RedoStack = new Stack<List<UIElement>>();
+        //// Các stack phục vụ mục đích undo và redo
+        //public static Stack<List<UIElement>> CommandManager.UndoStack = new Stack<List<UIElement>>();
+        //public static Stack<List<UIElement>> CommandManager.RedoStack = new Stack<List<UIElement>>();
 
 
         // Đếm số lần thực hiện paste một đối tượng
@@ -384,7 +384,7 @@ namespace MyPaint
                 UIEList.Add(newUIE);
             }
 
-            UndoStack.Push(UIEList);
+            CommandManager.AddCurrentSate(UIEList);
         }
 
 		// Phương thức sao chép một đối tượng
@@ -737,7 +737,7 @@ namespace MyPaint
 		// Kiểm tra có thực hiện được thao tác undo hay không
         private void UndoCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (UndoStack.Count() > 0)
+            if (CommandManager.UndoStack.Count() > 0)
                 e.CanExecute = true;
             else
                 e.CanExecute = false;
@@ -746,41 +746,45 @@ namespace MyPaint
 		// Xử lý undo
         private void UndoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-			// Lấy trạng thái mới nhất bỏ vào RedoStack
-            List<UIElement> undoList1 = UndoStack.Pop();
-            RedoStack.Push(undoList1);
+            //// Lấy trạng thái mới nhất bỏ vào RedoStack
+            //List<UIElement> undoList1 = UndoStack.Pop();
+            //RedoStack.Push(undoList1);
             
 			// Nếu trước đó chỉ có 1 trạng thái => Dừng 
-            drawingCanvas.Children.Clear();
-            if (UndoStack.Count == 0)
-            {
-                RemoveAdorner();
-                return;
-            }
+            //drawingCanvas.Children.Clear();
+            //if (UndoStack.Count == 0)
+            //{
+            //    RemoveAdorner();
+            //    return;
+            //}
 
 			// Lấy trạng thái trước đó và đưa canvas về trạng thái này
-            List<UIElement> undoList2 = UndoStack.Pop();
-            foreach (UIElement UIE in undoList2)
-            {
-                drawingCanvas.Children.Add(UIE);
-            }
+            //List<UIElement> undoList2 = UndoStack.Pop();
+            //foreach (UIElement UIE in undoList2)
+            //{
+            //    drawingCanvas.Children.Add(UIE);
+            //}
 			
-			// Thiết lập selectedUIElement = null
-            if (selectedUIElement != null)
-            {
-                selectedShape = null;
-                selectedUIElement = null;
-                selectedTextBox = null;
-            }
+            //// Thiết lập selectedUIElement = null
+            //if (selectedUIElement != null)
+            //{
+            //    selectedShape = null;
+            //    selectedUIElement = null;
+            //    selectedTextBox = null;
+            //}
 			
 			// Đưa lại trạng thái vào stack
-            UndoStack.Push(undoList2);
+            //UndoStack.Push(undoList2);
+
+
+            CommandManager.BackWard(ref drawingCanvas);
+
         }
 
 		// Kiểm tra có thực hiện được thao tác redo hay không
         private void RedoCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (RedoStack.Count() > 0)
+            if (CommandManager.RedoStack.Count() > 0)
                 e.CanExecute = true;
             else
                 e.CanExecute = false;
@@ -790,15 +794,17 @@ namespace MyPaint
         private void RedoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
 			// Lấy trạng thái canvas trong redo stack
-            List<UIElement> redoList = RedoStack.Pop();
-            UndoStack.Push(redoList);
+            //List<UIElement> redoList = RedoStack.Pop();
+            //UndoStack.Push(redoList);
 			
-			// Thực hiện khôi phục lại trạng thái đó
-            drawingCanvas.Children.Clear();
-            foreach (UIElement UIE in redoList)
-            {
-                drawingCanvas.Children.Add(UIE);
-            }
+            //// Thực hiện khôi phục lại trạng thái đó
+            //drawingCanvas.Children.Clear();
+            //foreach (UIElement UIE in redoList)
+            //{
+            //    drawingCanvas.Children.Add(UIE);
+            //}
+
+            CommandManager.ForWard(ref drawingCanvas);
         }
 
 		// Phương thức thêm hình ảnh vào canvas 

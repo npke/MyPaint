@@ -57,7 +57,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Arrow.cs" />
+    <Compile Include="CanvasState.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="Heart.cs" />
+    <Compile Include="CommandManager.cs" />
     <Compile Include="MyArrow.cs" />
     <Compile Include="MyHeart.cs" />
     <Compile Include="MyStar.cs" />
@@ -65,6 +68,7 @@
     <Compile Include="Options.xaml.cs">
       <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CanvasCommand.cs" />
     <Compile Include="ResizingAdorner.cs" />
     <Compile Include="ResizingLineAdorner.cs" />
     <Compile Include="ShapeFactory.cs" />
@@ -111,6 +115,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
