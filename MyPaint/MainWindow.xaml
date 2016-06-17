@@ -169,7 +169,7 @@
                         <MenuItem Header="Remove Border" Click="RemoveTextBorder"/>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Name="customShapeMenu" Header="Custom Shapes">
+                <MenuItem Name="customShapeMenu" Header="Custom Shapes" Click="customShapeMenuClick">
                     <MenuItem Name="triangleShape" Header="Triangle" Click="triangleShape_Click"/>
                     <MenuItem Name="arrowShape" Header="Arrow" Click="arrowShape_Click"/>
                     <MenuItem Name="starShape" Header="Star" Click="starShape_Click"/>

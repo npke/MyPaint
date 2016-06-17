@@ -44,5 +44,16 @@ namespace MyPaint
             // Kiểu nét vẽ
             line.StrokeDashArray = DashCollection;
         }
+
+        public override string GetShapeName()
+        {
+            return "Line";
+        }
+
+
+        public override MyShape Clone()
+        {
+            return new MyLine();
+        }
     }
 }

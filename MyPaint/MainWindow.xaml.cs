@@ -47,7 +47,7 @@ namespace MyPaint
         
         enum MODE { DRAW = 1, SELECT = 2 }
 
-        TypeShape.SHAPE shapeToDraw = TypeShape.SHAPE.LINE;
+        String shapeToDraw = "Line";
         MODE drawMode = MODE.DRAW;
 
         public static Shape selectedShape = null;
@@ -73,7 +73,9 @@ namespace MyPaint
             InitializeComponent();
             InitializeShape();
             AddShapeToggleButton();
+            ShapeFactory.PopulateBuiltInShape();
             loadPlugin();
+            
         }
 
         private void AddShapeToggleButton()
@@ -116,49 +118,49 @@ namespace MyPaint
         // Đánh dấu đối tượng sẽ vẽ là đường thằng
         private void drawLine(object sender, RoutedEventArgs e)
         {
-            drawShape(TypeShape.SHAPE.LINE, tglbtnLine);
+            drawShape("Line", tglbtnLine);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình chữ nhật
         private void drawRectangle(object sender, RoutedEventArgs e)
         {
-            drawShape(TypeShape.SHAPE.RECTANGLE, tglbtnRectangle);
+            drawShape("Rectangle", tglbtnRectangle);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình elíp
         private void drawEllipse(object sender, RoutedEventArgs e)
         {
-            drawShape(TypeShape.SHAPE.ELLIPSE, tglbtnEllipse);
+            drawShape("Ellipse", tglbtnEllipse);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình mũi tên
         private void drawArrow()
         {
-            drawShape(TypeShape.SHAPE.ARROW, null);
+            drawShape("Arrow", null);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình tam giác
         private void drawTriangle()
         {
-            drawShape(TypeShape.SHAPE.TRIANGLE, null);
+            drawShape("Triangle", null);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình ngôi sao
         private void drawStar()
         {
-            drawShape(TypeShape.SHAPE.STAR, null);
+            drawShape("Star", null);
         }
 
         // Đánh dấu đối tượng sẽ vẽ là hình trái tim
         private void drawHeart()
         {
-            drawShape(TypeShape.SHAPE.HEART, null);
+            drawShape("Heart", null);
         }
 
-        private void drawShape(TypeShape.SHAPE shape, ToggleButton tglBtnShape)
+        private void drawShape(string shapeName, ToggleButton tglBtnShape)
         {
             RemoveAdorner();
-            shapeToDraw = shape;
+            shapeToDraw = shapeName;
             shapeToggleButtonManager.CheckButton(tglBtnShape);
             drawMode = MODE.DRAW;
         }
@@ -219,7 +221,7 @@ namespace MyPaint
 
                 // Dùng lớp ShapeFactory để tạo ra đối tượng hình theo ý muốn.
                 Point position = e.GetPosition(drawingCanvas);
-                myShape = ShapeFacTory.ProduceShape(shapeToDraw);
+                myShape = ShapeFactory.GetShape(shapeToDraw);
                 myShape.StartPoint = position;
                 myShape.EndPoint = position;
                 myShape.Draw(drawingCanvas.Children);
@@ -1342,15 +1344,17 @@ namespace MyPaint
             // Invoke all the functions in all the dlls that we found
             foreach (var plugin in plugins)
             {
-                myShape = plugin;
-                customShapeMenu.Items.Add(plugin.ToString());
-                customShapeMenu.Click += new RoutedEventHandler(customShapeMenuClick);
+                MenuItem newItem = new MenuItem();
+                newItem.Header = plugin.GetShapeName();
+                customShapeMenu.Items.Add(newItem);
+                ShapeFactory.AddPrototype(plugin.GetShapeName(), plugin);
             }
         }
 
         public void customShapeMenuClick(Object sender, RoutedEventArgs e)
         {
-            //drawShape(TypeShape.SHAPE.UPARROW, null);
+            MenuItem menuItem = e.Source as MenuItem;
+            drawShape(menuItem.Header.ToString(), null);
         }
     }
 }

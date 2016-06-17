@@ -23,5 +23,15 @@ namespace UpArrowShape
                 collection.Add(upArrow);
             DrawedElement = upArrow;
         }
+
+        public override string GetShapeName()
+        {
+            return "Up Arrow";
+        }
+
+        public override MyShape Clone()
+        {
+            return new MyUpArrow();
+        }
     }
 }

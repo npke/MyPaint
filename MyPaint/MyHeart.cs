@@ -24,5 +24,15 @@ namespace MyPaint
                 collection.Add(heart);
             DrawedElement = heart;
         }
+
+        public override string GetShapeName()
+        {
+            return "Heart";
+        }
+
+        public override MyShape Clone()
+        {
+            return new MyHeart();
+        }
     }
 }

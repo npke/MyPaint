@@ -26,5 +26,15 @@ namespace MyPaint
                 collection.Add(ellipse);
             DrawedElement = ellipse;
         }
+
+        public override string GetShapeName()
+        {
+            return "Ellipse";
+        }
+
+        public override MyShape Clone()
+        {
+            return new MyEllipse();
+        }
     } 
 }

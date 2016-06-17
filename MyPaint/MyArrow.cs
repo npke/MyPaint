@@ -24,5 +24,15 @@ namespace MyPaint
                 collection.Add(arrow);
             DrawedElement = arrow;
         }
+
+        public override string GetShapeName()
+        {
+            return "Arrow";
+        }
+
+        public override MyShape Clone()
+        {
+            return new MyArrow();
+        }
     }
 }

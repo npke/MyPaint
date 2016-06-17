@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPaintPlugin", "MyPaintPlu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpArrowShape", "UpArrowShape\UpArrowShape.csproj", "{D0F59B69-0BE4-4B9E-99A0-CE821BDDFE46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HinhMessage", "HinhMessage\HinhMessage.csproj", "{F920FC2C-D4DA-4EBF-984C-ACED6C723D65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D0F59B69-0BE4-4B9E-99A0-CE821BDDFE46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0F59B69-0BE4-4B9E-99A0-CE821BDDFE46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0F59B69-0BE4-4B9E-99A0-CE821BDDFE46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F920FC2C-D4DA-4EBF-984C-ACED6C723D65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F920FC2C-D4DA-4EBF-984C-ACED6C723D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F920FC2C-D4DA-4EBF-984C-ACED6C723D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F920FC2C-D4DA-4EBF-984C-ACED6C723D65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

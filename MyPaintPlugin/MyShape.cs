@@ -97,5 +97,10 @@ namespace MyPaintPlugin
             if (DrawedElement != null)
                 collection.Remove(DrawedElement);
         }
+
+        // Phương thức trả về tên của hình
+        public abstract string GetShapeName();
+
+        public abstract MyShape Clone();
     }
 }

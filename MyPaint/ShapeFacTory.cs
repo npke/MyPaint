@@ -3,55 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyPaintPlugin;
+using System.Windows;
+using System.Windows.Media;
 
 namespace MyPaint
 {
-    
-
-    public class ShapeFacTory
+    public class ShapeFactory
     {
-         
-        // Hàm tạo và trả về đối tượng hình tùy thuộc kiểu SHAPE
-        public static MyShape ProduceShape(TypeShape.SHAPE Sh)
+
+        // Shape prototypes
+        private static Dictionary<string, MyShape> prototypes = new Dictionary<string, MyShape>();
+
+        // Add new prototype
+        public static bool AddPrototype(string shapeName, MyShape shape)
         {
-            
-            MyShape result =  null;
-            // Xác định đối tượng sẽ vẽ
-            switch (Sh)
+            if (!prototypes.Keys.Contains(shapeName))
             {
-                case TypeShape.SHAPE.LINE:
-                    result = new MyLine();
-                    break;
-
-                case TypeShape.SHAPE.RECTANGLE:
-                    result = new MyRectangle();
-                    break;
-
-                case TypeShape.SHAPE.ELLIPSE:
-                    result = new MyEllipse();
-                    break;
-
-                case TypeShape.SHAPE.ARROW:
-                    result = new MyArrow();
-                    break;
-
-                case TypeShape.SHAPE.TRIANGLE:
-                    result = new MyTriangle();
-                    break;
-
-                case TypeShape.SHAPE.HEART:
-                    result = new MyHeart();
-                    break;
-
-                case TypeShape.SHAPE.STAR:
-                    result = new MyStar();
-                    break;
-
-                default:
-                    break;
+                prototypes.Add(shapeName, shape);
+                return true;
             }
 
-            return result;
+            return false;
+        }
+
+        // Get shape from prototype list
+        public static MyShape GetShape(string shapeName)
+        {
+            if (prototypes.ContainsKey(shapeName))
+                return prototypes[shapeName].Clone();
+            return null;
+        }
+
+        // Populate built-in shape
+        public static void PopulateBuiltInShape()
+        {
+            prototypes.Add("Line", new MyLine());
+            prototypes.Add("Arrow", new MyArrow());
+            prototypes.Add("Ellipse", new MyEllipse());
+            prototypes.Add("Rectangle", new MyRectangle());
+            prototypes.Add("Star", new MyStar());
+            prototypes.Add("Triangle", new MyTriangle());
+            prototypes.Add("Heart", new MyHeart());
         }
     }
 }

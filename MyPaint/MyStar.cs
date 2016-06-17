@@ -24,5 +24,15 @@ namespace MyPaint
                 collection.Add(star);
             DrawedElement = star;
         }
+
+        public override string GetShapeName()
+        {
+            return "Star";
+        }
+
+        public override MyShape Clone()
+        {
+            return new MyStar();
+        }
     }
 }

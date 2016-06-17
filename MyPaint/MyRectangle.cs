@@ -29,5 +29,15 @@ namespace MyPaint
                 collection.Add(rectangle);
             DrawedElement = rectangle;
         }
+
+        public override string GetShapeName()
+        {
+            return "Rectangle";
+        }
+
+        public override MyShape Clone()
+        {
+            return new MyRectangle();
+        }
     }
 }

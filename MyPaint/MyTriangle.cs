@@ -24,5 +24,15 @@ namespace MyPaint
                 collection.Add(triangle);
             DrawedElement = triangle;
         }
+
+        public override string GetShapeName()
+        {
+            return "Triangle";
+        }
+
+        public override MyShape Clone()
+        {
+            return new MyTriangle();
+        }
     }
 }
