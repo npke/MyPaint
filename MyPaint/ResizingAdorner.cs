@@ -20,7 +20,8 @@ namespace MyPaint
     public class ResizingAdorner : Adorner
     {
         // Tạo các thumb dùng như anchor point để thay đổi kích thước các hình vẽ
-        Thumb topLeft, topRight, bottomLeft, bottomRight, middleTop, middleBottom, middleLeft, middleRight;
+        Thumb topLeft, topRight, bottomLeft, bottomRight;
+        Thumb middleTop, middleBottom, middleLeft, middleRight;
 
         // Tập chứa các thumb
         VisualCollection visualChildren;

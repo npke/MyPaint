@@ -641,19 +641,13 @@ namespace MyPaint
 			
 			// Bold, Italic, Underline
             if (tglbtnBold.IsChecked == true)
-            {
                 textBox.FontWeight = FontWeights.Bold;
-            }
 
             if (tglbtnItalic.IsChecked == true)
-            {
                 textBox.FontStyle = FontStyles.Italic;
-            }
 
             if (tglbtnUnderline.IsChecked == true)
-            {
                 textBox.TextDecorations = TextDecorations.Underline;
-            }
 
 			// Font chữ
             try
@@ -1172,48 +1166,50 @@ namespace MyPaint
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                System.IO.MemoryStream ms = new System.IO.MemoryStream();
-				BitmapEncoder bitmapEncoder;
+                SaveFileManager saveFile = new SaveFileManager(drawingCanvas, saveFileDialog.FileName, renderBitmap);
+                saveFile.Save();
+                //System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                //BitmapEncoder bitmapEncoder;
 				 
-                switch (System.IO.Path.GetExtension(saveFileDialog.FileName))
-                {
-                    // Lưu dạng bitmap
-                    case ".bmp":
-                        bitmapEncoder = new BmpBitmapEncoder();
-                        break;
+                //switch (System.IO.Path.GetExtension(saveFileDialog.FileName))
+                //{
+                //    // Lưu dạng bitmap
+                //    case ".bmp":
+                //        bitmapEncoder = new BmpBitmapEncoder();
+                //        break;
 
-                    case ".png":
-                        bitmapEncoder = new PngBitmapEncoder();
-                        break;
+                //    case ".png":
+                //        bitmapEncoder = new PngBitmapEncoder();
+                //        break;
 
-                    case ".gif":
-                        bitmapEncoder = new GifBitmapEncoder();
-                        break;
+                //    case ".gif":
+                //        bitmapEncoder = new GifBitmapEncoder();
+                //        break;
 
-                    case ".jpg":
-                        bitmapEncoder = new JpegBitmapEncoder();
-                        break;
+                //    case ".jpg":
+                //        bitmapEncoder = new JpegBitmapEncoder();
+                //        break;
 
-                    // Lưu đối tượng
-                    default:
-                        string[] xamlShape = new string[drawingCanvas.Children.Count];
-                        int i = 0;
-                        foreach (UIElement mySaveShape in drawingCanvas.Children)
-                        {
-                            xamlShape[i] = XamlWriter.Save(mySaveShape);
-                            i++;
-                        }
-                        System.IO.File.WriteAllLines(saveFileDialog.FileName, xamlShape);
-                        ms.Close();
-                        this.Title = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + "- My Paint";
-                        return;
-                }
+                //    // Lưu đối tượng
+                //    default:
+                //        string[] xamlShape = new string[drawingCanvas.Children.Count];
+                //        int i = 0;
+                //        foreach (UIElement mySaveShape in drawingCanvas.Children)
+                //        {
+                //            xamlShape[i] = XamlWriter.Save(mySaveShape);
+                //            i++;
+                //        }
+                //        System.IO.File.WriteAllLines(saveFileDialog.FileName, xamlShape);
+                //        ms.Close();
+                //        this.Title = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + "- My Paint";
+                //        return;
+                //}
 				
-				bitmapEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
-                bitmapEncoder.Save(ms);
+                //bitmapEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+                //bitmapEncoder.Save(ms);
 				
-                ms.Close();
-                System.IO.File.WriteAllBytes(saveFileDialog.FileName, ms.ToArray());
+                //ms.Close();
+                //System.IO.File.WriteAllBytes(saveFileDialog.FileName, ms.ToArray());
                 this.Title = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + "- My Paint";
             }
         }
