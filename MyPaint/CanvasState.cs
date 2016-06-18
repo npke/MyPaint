@@ -9,7 +9,6 @@ namespace MyPaint
 {
     public class CanvasState
     {
-
         private List<UIElement> _ListUIE = new List<UIElement>();
 
         public CanvasState(List<UIElement> ListUIE)
@@ -26,9 +25,5 @@ namespace MyPaint
                 drawingCanvas.Children.Add(UIE);
             }
         }
-
-
-
-
     }
 }

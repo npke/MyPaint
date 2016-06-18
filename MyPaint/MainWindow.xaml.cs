@@ -108,10 +108,9 @@ namespace MyPaint
             if (tglbtnSelect.IsChecked == true)
                 drawMode = MODE.SELECT;
             else
-            {
                 drawMode = MODE.DRAW;
-                shapeToggleButtonManager.CheckButton(null);
-            }
+
+            shapeToggleButtonManager.CheckButton(null);
         }
 
 
@@ -179,7 +178,7 @@ namespace MyPaint
             isMouseDowned = true;
 
             // Nếu double click thì tạo textbox tại vị trí vừa click
-            if (e.ClickCount == 2 && e.Source == drawingCanvas)
+            if (tglbtnText.IsChecked == true && e.Source == drawingCanvas)
             {
                 Point position = e.GetPosition(drawingCanvas);
                 addText(position.Y, position.X);
@@ -1361,6 +1360,14 @@ namespace MyPaint
         {
             MenuItem menuItem = e.Source as MenuItem;
             drawShape(menuItem.Header.ToString(), null);
+        }
+
+        private void tglbtnText_Click(object sender, RoutedEventArgs e)
+        {
+            if (tglbtnText.IsChecked == true)
+                shapeToggleButtonManager.CheckButton(tglbtnText);
+            else
+                shapeToggleButtonManager.CheckButton(null);
         }
     }
 }

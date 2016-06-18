@@ -13,7 +13,6 @@ namespace MyPaint
         public static Stack<Command> UndoStack = new Stack<Command>();
         public static Stack<Command> RedoStack = new Stack<Command>();
 
-
         public static void AddCurrentSate(List<UIElement> Prams)
         {
             CanvasState doc = new CanvasState(Prams);
@@ -64,8 +63,5 @@ namespace MyPaint
         {
             UndoStack.Push(cmd);
         }
-
-
-
     }
 }

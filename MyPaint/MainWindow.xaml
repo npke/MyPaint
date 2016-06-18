@@ -485,7 +485,7 @@
                     </Separator.RenderTransform>
                 </Separator>
 
-                <ToggleButton IsEnabled="False" Name="tglbtnText" Background="{x:Null}" Margin="2, 2 ,2 ,2" Width="27" Height="27" ToolTip="Text" Padding="1">
+                <ToggleButton Name="tglbtnText" Background="{x:Null}" Margin="2, 2 ,2 ,2" Width="27" Height="27" ToolTip="Text" Padding="1" Click="tglbtnText_Click">
                     <Image>
                         <Image.Source>
                             <CroppedBitmap Source="resources/icons.png" SourceRect="0,420,21,21"/>
