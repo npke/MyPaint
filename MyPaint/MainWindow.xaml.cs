@@ -106,10 +106,9 @@ namespace MyPaint
             if (tglbtnSelect.IsChecked == true)
                 drawMode = MODE.SELECT;
             else
-            {
                 drawMode = MODE.DRAW;
-                shapeToggleButtonManager.CheckButton(null);
-            }
+
+            shapeToggleButtonManager.CheckButton(tglbtnSelect);
         }
 
 
@@ -168,16 +167,14 @@ namespace MyPaint
         {
             // Xử lý cho thumb resize canvas
             if (e.Source == canvasResizerRightBottom)
-            {
                 return;
-            }
 
             // Lấy vị trí con trỏ chuột bấm xuống và đánh dấu trạng thái chuột là đã bấm
             startPoint = e.GetPosition(drawingCanvas);
             isMouseDowned = true;
 
             // Nếu double click thì tạo textbox tại vị trí vừa click
-            if (e.ClickCount == 2 && e.Source == drawingCanvas)
+            if (tglbtnText.IsChecked == true && e.Source == drawingCanvas)
             {
                 Point position = e.GetPosition(drawingCanvas);
                 addText(position.Y, position.X);
@@ -194,17 +191,7 @@ namespace MyPaint
                 // Nếu vừa vẽ một đối tượng và bấm lên chính đối tượng đó
                 if (selectedUIElement != null && e.Source == selectedUIElement)
                 {
-                    // Xác định khoảng cách tới biên trên và biên trái của đối tượng trong canvas
-                    if (Canvas.GetTop(selectedUIElement).Equals(Double.NaN))
-                        top = 0;
-                    else top = Canvas.GetTop(selectedUIElement);
-
-                    if (Canvas.GetLeft(selectedUIElement).Equals(Double.NaN))
-                        left = 0;
-                    else left = Canvas.GetLeft(selectedUIElement);
-
-                    // Chuyển con trỏ chuột sang trạng thái SizeAll
-                    this.Cursor = Cursors.SizeAll;
+                    prepareToMoveElement();
                     e.Handled = true;
                     return;
                 }
@@ -212,67 +199,87 @@ namespace MyPaint
                 // Nếu có đối tượng vừa vẽ mà lại bấm lên canvas hoặc đối tượng khác
                 // => Remove lớp Adorner của đối tượng vừa vẽ chuẩn bị vẽ đối tượng mới
                 if (selectedUIElement != null && e.Source != selectedUIElement  && selectedTextBox == null)
-                {
                     // Remove Adorner layer
                     RemoveAdorner();
-                }
 
-                // Dùng lớp ShapeFactory để tạo ra đối tượng hình theo ý muốn.
-                Point position = e.GetPosition(drawingCanvas);
-                myShape = ShapeFactory.GetShape(shapeToDraw);
-                myShape.StartPoint = position;
-                myShape.EndPoint = position;
-                myShape.Draw(drawingCanvas.Children);
+                createNewShape(e);
             }
 
             // Nếu ở chế độ chọn
             // Nếu click lên một đối tượng thì cho phép move, resize đối tượng đó
             if (drawMode == MODE.SELECT)
-            {
-
-                // Nếu bấm lên một đối tượng khác đối tượng vừa chọn trước đó
-                // => Remove adorner layer ở đối tượng cũ
-                if (e.Source != selectedUIElement && selectedUIElement != null)
-                {
-                    RemoveAdorner();
-                }
-
-                // Nếu bấm chuột lên một đối tượng khác
-                if (e.Source != drawingCanvas)
-                {
-                    // Lấy đối tượng đã chọn
-                    selectedUIElement = e.Source as UIElement;
-                    if (selectedUIElement is Shape)
-                    {
-                        selectedShape = e.Source as Shape;
-                    }
-                    else if (selectedUIElement is TextBox)
-                    {
-                        selectedTextBox = e.Source as TextBox;
-                        Keyboard.Focus(selectedTextBox);
-                    }
-                    else
-                    {
-
-                    }
-
-                    // Xác định khoảng cách tới biên trên và biên trái của đối tượng trong canvas
-                    if (Canvas.GetTop(selectedUIElement).Equals(Double.NaN))
-                        top = 0;
-                    else top = Canvas.GetTop(selectedUIElement);
-
-                    if (Canvas.GetLeft(selectedUIElement).Equals(Double.NaN))
-                        left = 0;
-                    else left = Canvas.GetLeft(selectedUIElement);
-
-                    // Tạo một AdornerLayer cho đối tượng và thêm vào adornerLayer
-                    AddAdorner(selectedUIElement);
-
-                    // Chuyển con trỏ chuột sang trạng thái SizeAll
-                    this.Cursor = Cursors.SizeAll;
-                }
-            }
+                moveResizeElement(e);
             e.Handled = true;
+        }
+
+        private void moveResizeElement(MouseButtonEventArgs e)
+        {
+            // Nếu bấm lên một đối tượng khác đối tượng vừa chọn trước đó
+            // => Remove adorner layer ở đối tượng cũ
+            if (e.Source != selectedUIElement && selectedUIElement != null)
+            {
+                RemoveAdorner();
+            }
+
+            // Nếu bấm chuột lên một đối tượng khác
+            if (e.Source != drawingCanvas)
+            {
+                // Lấy đối tượng đã chọn
+                selectedUIElement = e.Source as UIElement;
+                if (selectedUIElement is Shape)
+                {
+                    selectedShape = e.Source as Shape;
+                }
+                else if (selectedUIElement is TextBox)
+                {
+                    selectedTextBox = e.Source as TextBox;
+                    Keyboard.Focus(selectedTextBox);
+                }
+                else
+                {
+
+                }
+
+                // Xác định khoảng cách tới biên trên và biên trái của đối tượng trong canvas
+                if (Canvas.GetTop(selectedUIElement).Equals(Double.NaN))
+                    top = 0;
+                else top = Canvas.GetTop(selectedUIElement);
+
+                if (Canvas.GetLeft(selectedUIElement).Equals(Double.NaN))
+                    left = 0;
+                else left = Canvas.GetLeft(selectedUIElement);
+
+                // Tạo một AdornerLayer cho đối tượng và thêm vào adornerLayer
+                AddAdorner(selectedUIElement);
+
+                // Chuyển con trỏ chuột sang trạng thái SizeAll
+                this.Cursor = Cursors.SizeAll;
+            }
+        }
+
+        private void createNewShape(MouseButtonEventArgs e)
+        {
+            // Dùng lớp ShapeFactory để tạo ra đối tượng hình theo ý muốn.
+            Point position = e.GetPosition(drawingCanvas);
+            myShape = ShapeFactory.GetShape(shapeToDraw);
+            myShape.StartPoint = position;
+            myShape.EndPoint = position;
+            myShape.Draw(drawingCanvas.Children);
+        }
+
+        private void prepareToMoveElement()
+        {
+            // Xác định khoảng cách tới biên trên và biên trái của đối tượng trong canvas
+            if (Canvas.GetTop(selectedUIElement).Equals(Double.NaN))
+                top = 0;
+            else top = Canvas.GetTop(selectedUIElement);
+
+            if (Canvas.GetLeft(selectedUIElement).Equals(Double.NaN))
+                left = 0;
+            else left = Canvas.GetLeft(selectedUIElement);
+
+            // Chuyển con trỏ chuột sang trạng thái SizeAll
+            this.Cursor = Cursors.SizeAll;
         }
 
         // Xử lý khi di chuyển chuột trong Canvas
@@ -285,90 +292,113 @@ namespace MyPaint
             // Nếu đang ở chế độ vẽ => Vẽ đối tượng
             if (drawMode == MODE.DRAW && selectedUIElement == null)
             {
-                // Nhả chuột
-                if (e.LeftButton == MouseButtonState.Released)
+                if (!updateShapeOnMouseMove(e))
                     return;
-
-                if (!((Math.Abs(e.GetPosition(drawingCanvas).X - startPoint.X) > SystemParameters.MinimumHorizontalDragDistance) ||
-                        (Math.Abs(e.GetPosition(drawingCanvas).Y - startPoint.Y) > SystemParameters.MinimumVerticalDragDistance)))
-                    return;
-
-                // Lấy ví trị chuột mỗi khi di chuyển
-                endPoint = e.GetPosition(drawingCanvas);
-
-                // ??? Chuyển thành hàm, chỉnh lại thông số
-                // Thiết lập các thuộc tính cho đối tượng cần vẽ
-                if (startPoint.Equals(endPoint))
-                    return;
-                myShape.StrokeBrush = strokeBrush;
-                myShape.FillBrush = fillBrush;
-                myShape.StrokeThickness = strokeThickness;
-                myShape.StartPoint = startPoint;
-                myShape.EndPoint = endPoint;
-                myShape.DashCollection = dashCollection;
-
-                // Gọi hàm vẽ đối tượng tương ứng, đây là đối tượng xem trước
-                myShape.Draw(drawingCanvas.Children);
             }
 
             // Nếu ở chế độ chọn => cho phép di chuyển, thay đổi kích thước
             if ((drawMode == MODE.SELECT && selectedUIElement != null) || selectedUIElement != null)
             {
-                // Kiểm tra phím Ctr có đang được bấm thì sẽ thực hiện xoay đối tượng
-                if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)
-                || Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
-                {
-                    // Xác định các điểm tâm và điểm tạo góc
-                    Point centerPoint = new Point();
-                    endPoint = e.GetPosition(drawingCanvas);
-
-                    // Không cho phép xoay đường thẳng
-                    if (selectedUIElement is Line)
-                        return;
-
-                    // Xoay các hình
-                    if (selectedUIElement is Shape)
-                    {
-                        centerPoint.X = selectedShape.Width / 2 + left;
-                        centerPoint.Y = selectedShape.Height / 2 + top;
-                    }
-                    else if (selectedUIElement is TextBox) // Xoay văn bản
-                    {
-                        centerPoint.X = left + (selectedTextBox.ActualWidth / 2);
-                        centerPoint.Y = top + (selectedTextBox.ActualHeight / 2);
-                    }
-
-                    // Hai vector tạo góc xoay
-                    Vector startVector = Point.Subtract(startPoint, centerPoint);
-                    Vector deltaVector = Point.Subtract(endPoint, centerPoint);
-
-                    // Góc giữa hai vector
-                    double angle = Vector.AngleBetween(startVector, deltaVector);
-
-                    // Xoay đối tượng
-                    selectedUIElement.RenderTransform = new RotateTransform(angle, centerPoint.X - left, centerPoint.Y - top);
-                    isMoved = true;
+                if (!rotateShape(e))
                     return;
-                }
 
                 // Kiểm tra có phải người dùng đang thực hiện thao tác Drag
                 if ( (isDragging == false) &&
                     ( (Math.Abs(e.GetPosition(drawingCanvas).X -  startPoint.X) > SystemParameters.MinimumHorizontalDragDistance) || 
                         (Math.Abs(e.GetPosition(drawingCanvas).Y -  startPoint.Y) > SystemParameters.MinimumVerticalDragDistance) ) )
-                {
                     isDragging = true;
-                }
 
                 // Thực hiện di chuyển đối tượng
                 if (isDragging)
-                {
-                    Point currentPoint = e.GetPosition(drawingCanvas);
-
-                    Canvas.SetTop(selectedUIElement, currentPoint.Y - (startPoint.Y - top));
-                    Canvas.SetLeft(selectedUIElement, currentPoint.X - (startPoint.X - left));
-                    isMoved = true;
-                }
+                    moveShape(e);
             }
+        }
+
+        private void moveShape(MouseEventArgs e)
+        {
+            Point currentPoint = e.GetPosition(drawingCanvas);
+
+            Canvas.SetTop(selectedUIElement, currentPoint.Y - (startPoint.Y - top));
+            Canvas.SetLeft(selectedUIElement, currentPoint.X - (startPoint.X - left));
+            isMoved = true;
+        }
+
+        private bool rotateShape(MouseEventArgs e)
+        {
+            // Kiểm tra phím Ctrl có đang được bấm thì sẽ thực hiện xoay đối tượng
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)
+            || Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+            {
+                // Xác định các điểm tâm và điểm tạo góc
+                Point centerPoint = new Point();
+                endPoint = e.GetPosition(drawingCanvas);
+
+                // Không cho phép xoay đường thẳng
+                if (selectedUIElement is Line)
+                    return false;
+
+                // Xoay các hình
+                if (selectedUIElement is Shape)
+                {
+                    centerPoint.X = selectedShape.Width / 2 + left;
+                    centerPoint.Y = selectedShape.Height / 2 + top;
+                }
+                else if (selectedUIElement is TextBox) // Xoay văn bản
+                {
+                    centerPoint.X = left + (selectedTextBox.ActualWidth / 2);
+                    centerPoint.Y = top + (selectedTextBox.ActualHeight / 2);
+                }
+
+                // Hai vector tạo góc xoay
+                Vector startVector = Point.Subtract(startPoint, centerPoint);
+                Vector deltaVector = Point.Subtract(endPoint, centerPoint);
+
+                // Góc giữa hai vector
+                double angle = Vector.AngleBetween(startVector, deltaVector);
+
+                // Xoay đối tượng
+                selectedUIElement.RenderTransform = new RotateTransform(angle, centerPoint.X - left, centerPoint.Y - top);
+                isMoved = true;
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool updateShapeOnMouseMove(MouseEventArgs e)
+        {
+            // Nhả chuột
+            if (e.LeftButton == MouseButtonState.Released)
+                return false;
+
+            if (!((Math.Abs(e.GetPosition(drawingCanvas).X - startPoint.X) > SystemParameters.MinimumHorizontalDragDistance) ||
+                    (Math.Abs(e.GetPosition(drawingCanvas).Y - startPoint.Y) > SystemParameters.MinimumVerticalDragDistance)))
+                return false;
+
+            // Lấy ví trị chuột mỗi khi di chuyển
+            endPoint = e.GetPosition(drawingCanvas);
+
+            // ??? Chuyển thành hàm, chỉnh lại thông số
+            // Thiết lập các thuộc tính cho đối tượng cần vẽ
+            if (startPoint.Equals(endPoint))
+                return false;
+
+            updateShapeProperties();
+
+            // Gọi hàm vẽ đối tượng tương ứng, đây là đối tượng xem trước
+            myShape.Draw(drawingCanvas.Children);
+
+            return true;
+        }
+
+        private void updateShapeProperties()
+        {
+            myShape.StrokeBrush = strokeBrush;
+            myShape.FillBrush = fillBrush;
+            myShape.StrokeThickness = strokeThickness;
+            myShape.StartPoint = startPoint;
+            myShape.EndPoint = endPoint;
+            myShape.DashCollection = dashCollection;
         }
 
 		
@@ -398,29 +428,8 @@ namespace MyPaint
         	// Nếu ở chế độ vẽ
             if (drawMode == MODE.DRAW)
             {
-                endPoint = e.GetPosition(drawingCanvas);
-
-                // Vẽ đối tượng với các thông số cuối cùng lên canvas
-                if (selectedUIElement == null)
-                {
-                    if (myShape == null)
-                        return;
-
-                    try
-                    {
-                        //myShape.DrawOnMouseUp(drawingCanvas.Children, shiftKeyPressed);
-                        if (myShape.DrawedElement == null)
-                            return;
-
-                        AddAdorner(myShape.DrawedElement);
-                        CommandManager.SnapCanvas(ref drawingCanvas);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "1");
-                    }
-                }
-                myShape = null;
+                if (!addAdornerWhenMouseUp(e))
+                    return;
             }
             
             // Nếu ở chế độ chọn
@@ -428,13 +437,36 @@ namespace MyPaint
             {
             	// Bỏ đánh dấu chuột đang bấm xuống và đang thực hiện Drag
                 if (isMouseDowned)
-                {
                     isDragging = false;
-                }
             }
 
             // Đưa con trỏ chuột về hình dạng bình thường
             this.Cursor = Cursors.Arrow;
+        }
+
+        private bool addAdornerWhenMouseUp(MouseButtonEventArgs e)
+        {
+            endPoint = e.GetPosition(drawingCanvas);
+            if (selectedUIElement == null)
+            {
+                if (myShape == null)
+                    return false;
+
+                try
+                {
+                    if (myShape.DrawedElement == null)
+                        return false;
+
+                    AddAdorner(myShape.DrawedElement);
+                    CommandManager.SnapCanvas(ref drawingCanvas);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "1");
+                }
+            }
+            myShape = null;
+            return true;
         }
 
         // Xử lý phím bấm 
@@ -598,19 +630,13 @@ namespace MyPaint
 			
 			// Bold, Italic, Underline
             if (tglbtnBold.IsChecked == true)
-            {
                 textBox.FontWeight = FontWeights.Bold;
-            }
 
             if (tglbtnItalic.IsChecked == true)
-            {
                 textBox.FontStyle = FontStyles.Italic;
-            }
 
             if (tglbtnUnderline.IsChecked == true)
-            {
                 textBox.TextDecorations = TextDecorations.Underline;
-            }
 
 			// Font chữ
             try
@@ -660,7 +686,7 @@ namespace MyPaint
 		// Thực hiện thao tác cut
         private void CutCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            CommandManager.CallItemCmd("save", ref drawingCanvas, ref canvasResizerRightBottom);
+            CommandManager.CallItemCmd("cut", ref drawingCanvas, ref canvasResizerRightBottom);
 
         }
 
@@ -903,7 +929,7 @@ namespace MyPaint
 		// Xử lý khi người dúng bấm nút xóa
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CommandManager.CallItemCmd("detele", ref drawingCanvas, ref canvasResizerRightBottom);
+            CommandManager.CallItemCmd("delete", ref drawingCanvas, ref canvasResizerRightBottom);
         }
 	
 		// Căn chỉnh Horozontal Aligment của văn bản
@@ -1034,54 +1060,9 @@ namespace MyPaint
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                System.IO.MemoryStream ms = new System.IO.MemoryStream();
-                BitmapEncoder bitmapEncoder;
-
-                switch (System.IO.Path.GetExtension(saveFileDialog.FileName))
-                {
-                    // Lưu dạng bitmap
-                    case ".bmp":
-                        bitmapEncoder = new BmpBitmapEncoder();
-                        break;
-
-                    case ".png":
-                        bitmapEncoder = new PngBitmapEncoder();
-                        break;
-
-                    case ".gif":
-                        bitmapEncoder = new GifBitmapEncoder();
-                        break;
-
-                    case ".jpg":
-                        bitmapEncoder = new JpegBitmapEncoder();
-                        break;
-
-                    // Lưu đối tượng
-                    default:
-                        string[] xamlShape = new string[drawingCanvas.Children.Count];
-                        int i = 0;
-                        foreach (UIElement mySaveShape in drawingCanvas.Children)
-                        {
-                            xamlShape[i] = XamlWriter.Save(mySaveShape);
-                            i++;
-                        }
-                        System.IO.File.WriteAllLines(saveFileDialog.FileName, xamlShape);
-                        ms.Close();
-                        this.Title = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + "- My Paint";
-                        return;
-                }
-
-                bitmapEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
-                bitmapEncoder.Save(ms);
-
-                ms.Close();
-                System.IO.File.WriteAllBytes(saveFileDialog.FileName, ms.ToArray());
-                this.Title = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + "- My Paint";
+                CommandManager.CallItemCmd("save", ref drawingCanvas,ref canvasResizerRightBottom,saveFileDialog.FileName,renderBitmap);
+                this.Title = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + " - My Paint";
             }
-
-
-            
-            // 
         }
 
 
@@ -1136,8 +1117,7 @@ namespace MyPaint
         // Chức năng xoay canvas
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            //Options op = Options.GetOptionsInstance();
-            Options op = new Options();
+            Options op = Options.GetOptionsInstance();
             op.rotateCanvas = rotateCanvas;
             op.Show();
             op.Focus();
@@ -1217,6 +1197,14 @@ namespace MyPaint
         {
             MenuItem menuItem = e.Source as MenuItem;
             drawShape(menuItem.Header.ToString(), null);
+        }
+
+        private void tglbtnText_Click(object sender, RoutedEventArgs e)
+        {
+            if (tglbtnText.IsChecked == true)
+                shapeToggleButtonManager.CheckButton(tglbtnText);
+            else
+                shapeToggleButtonManager.CheckButton(null);
         }
     }
 }

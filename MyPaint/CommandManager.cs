@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media.Imaging;
 
 namespace MyPaint
 {
@@ -13,7 +14,6 @@ namespace MyPaint
         // Các stack phục vụ mục đích undo và redo
         public static Stack<Command> UndoStack = new Stack<Command>();
         public static Stack<Command> RedoStack = new Stack<Command>();
-
 
         // Dictionary để quản lý lệnh open/save/new/delete/cut/copy/paste
         public static Dictionary<string, Command> ListCmd = new Dictionary<string, Command>();
@@ -30,11 +30,11 @@ namespace MyPaint
         }
 
         // hàm thực hiện một lệnh theo tên
-        public static void CallItemCmd(string nameCmd, ref Canvas drawingCanvas, ref Thumb canvasResizerRightBottom)
+        public static void CallItemCmd(string nameCmd, ref Canvas drawingCanvas, ref Thumb canvasResizerRightBottom, string fileName = null, RenderTargetBitmap renderBitmap = null)
         {
             try
             {
-                ListCmd[nameCmd].Execute(ref drawingCanvas, ref canvasResizerRightBottom);
+                ListCmd[nameCmd].Execute(ref drawingCanvas, ref canvasResizerRightBottom,fileName, renderBitmap);
             }
             catch (Exception)
             {
@@ -93,7 +93,6 @@ namespace MyPaint
             UndoStack.Push(cmd);
         }
 
-
         // Phương thức lưu lại các đối tượng hiện có của Canvas vào trong stack
         public static void SnapCanvas(ref Canvas drawingCanvas)
         {
@@ -106,7 +105,5 @@ namespace MyPaint
 
             AddCurrentSate(UIEList);
         }
-
-
     }
 }

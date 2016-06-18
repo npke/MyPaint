@@ -8,24 +8,21 @@ namespace MyPaint
 {
     public class CanvasCommand : Command
     {
-        CanvasState cvs = null;
+        CanvasState canvasState = null;
 
         public CanvasCommand(CanvasState canvas)
         {
-            cvs = canvas;
+            canvasState = canvas;
         }
-
-
 
         public override void Undo(ref Canvas DrawingCanvas)
         {
-            cvs.RestoreCanvas(ref  DrawingCanvas);
-
+            canvasState.RestoreCanvas(ref  DrawingCanvas);
         }
 
         public override void Redo(ref Canvas drawingCanvas)
         {
-            cvs.RestoreCanvas(ref drawingCanvas);
+            canvasState.RestoreCanvas(ref drawingCanvas);
         }
     }
 }

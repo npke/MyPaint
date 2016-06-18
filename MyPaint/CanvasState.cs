@@ -16,7 +16,6 @@ namespace MyPaint
 {
     public class CanvasState
     {
-
         private List<UIElement> _ListUIE = new List<UIElement>();
 
         public CanvasState(List<UIElement> ListUIE)
@@ -38,7 +37,6 @@ namespace MyPaint
                 drawingCanvas.Children.Add(UIE);
             }
         }
-
 
         // Hàm thực hiện copy Shape được chọn.
         public void CopyShape(UIElement selectedUIElement)
@@ -122,10 +120,10 @@ namespace MyPaint
 
 
         // Thực hiện save
-        public void Save(ref Canvas drawingCanvas, ref Thumb canvasResizerRightBottom)
+        public void Save(ref Canvas drawingCanvas, ref Thumb canvasResizerRightBottom, string fileName, RenderTargetBitmap renderBitmap)
         {
-            
-                
+            SaveFileManager saveFile = new SaveFileManager(drawingCanvas, fileName, renderBitmap);
+            saveFile.Save();
         }
 
 
@@ -191,9 +189,5 @@ namespace MyPaint
             drawingCanvas.Children.Clear();
             MainWindow.RemoveAdorner();
         }
-
-
-
-
     }
 }

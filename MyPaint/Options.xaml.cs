@@ -20,22 +20,22 @@ namespace MyPaint
     public partial class Options : Window
     {
         
-        //private static Options _instance = null;
+        private static Options _instance = null;
 
         public RotateCanvas rotateCanvas;
         public double RotateAngle = 0;
         public delegate void RotateCanvas(double angle);
 
-        //public static Options GetOptionsInstance()
-        //{
-        //    if (_instance == null)
-        //        _instance = new Options();
-        //    return _instance;
-        //}
-
-        public Options()
+        private Options()
         {
             InitializeComponent();
+        }
+
+        public static Options GetOptionsInstance()
+        {
+            if (_instance == null)
+                _instance = new Options();
+            return _instance;
         }
 
         private void btnRotate_Click(object sender, RoutedEventArgs e)

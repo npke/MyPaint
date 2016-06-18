@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media.Imaging;
 
 namespace MyPaint
 {
@@ -15,7 +16,7 @@ namespace MyPaint
         public virtual void Redo(ref Canvas DrawingCanvas)
         { }
 
-        public virtual void Execute(ref Canvas drawingCanvas, ref Thumb canvasResizerRightBottom)
+        public virtual void Execute(ref Canvas drawingCanvas, ref Thumb canvasResizerRightBottom, string fileName, RenderTargetBitmap renderBitmap)
         { }
     }
 }

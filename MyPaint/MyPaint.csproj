@@ -78,6 +78,7 @@
     <Compile Include="ResizingAdorner.cs" />
     <Compile Include="ResizingLineAdorner.cs" />
     <Compile Include="SaveCommand.cs" />
+    <Compile Include="SaveFileManager.cs" />
     <Compile Include="ShapeFactory.cs" />
     <Compile Include="ShapeManager.cs" />
     <Compile Include="Star.cs" />
@@ -122,7 +123,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

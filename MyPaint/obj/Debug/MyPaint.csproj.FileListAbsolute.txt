@@ -29,22 +29,6 @@ E:\LOCKED\HCMUS\KI 5\LAP TRINH WINDOWS\Projects\Lan 2\Source\MyPaint\obj\Debug\O
 E:\LOCKED\HCMUS\KI 5\LAP TRINH WINDOWS\Projects\Lan 2\Source\MyPaint\obj\Debug\Options.g.cs
 E:\LOCKED\HCMUS\KI 5\LAP TRINH WINDOWS\Projects\Lan 2\Source\MyPaint\obj\Debug\GeneratedInternalTypeHelper.g.cs
 E:\LOCKED\HCMUS\KI 5\LAP TRINH WINDOWS\Projects\Lan 2\Source\MyPaint\obj\Debug\MyPaint_MarkupCompile.lref
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\bin\Debug\MyPaint.exe.config
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.exe
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.pdb
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\bin\Debug\MyPaint.exe
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\bin\Debug\MyPaint.pdb
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.csprojResolveAssemblyReference.cache
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\Options.baml
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MainWindow.g.cs
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\Options.g.cs
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\App.g.cs
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint_MarkupCompile.cache
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint_MarkupCompile.lref
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MainWindow.baml
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.g.resources
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.Properties.Resources.resources
-C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.csproj.GenerateResource.Cache
 D:\HCMUS\Term-06\Software-Architecture\Project\my-paint-windows\MyPaint\bin\Debug\MyPaint.exe.config
 D:\HCMUS\Term-06\Software-Architecture\Project\my-paint-windows\MyPaint\bin\Debug\MyPaint.exe
 D:\HCMUS\Term-06\Software-Architecture\Project\my-paint-windows\MyPaint\bin\Debug\MyPaint.pdb
@@ -63,5 +47,39 @@ D:\HCMUS\Term-06\Software-Architecture\Project\my-paint-windows\MyPaint\obj\Debu
 D:\HCMUS\Term-06\Software-Architecture\Project\my-paint-windows\MyPaint\obj\Debug\MyPaint.csproj.GenerateResource.Cache
 D:\HCMUS\Term-06\Software-Architecture\Project\my-paint-windows\MyPaint\obj\Debug\MyPaint.exe
 D:\HCMUS\Term-06\Software-Architecture\Project\my-paint-windows\MyPaint\obj\Debug\MyPaint.pdb
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\bin\Debug\MyPaint.exe.config
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\MyPaint.exe
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\MyPaint.pdb
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\bin\Debug\MyPaint.exe
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\bin\Debug\MyPaint.pdb
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\bin\Debug\MyPaintPlugin.dll
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\bin\Debug\MyPaintPlugin.pdb
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\MyPaint.csprojResolveAssemblyReference.cache
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\Options.baml
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\MainWindow.g.cs
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\Options.g.cs
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\App.g.cs
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\MyPaint_MarkupCompile.cache
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\MyPaint_MarkupCompile.lref
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\MainWindow.baml
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\MyPaint.g.resources
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\MyPaint.Properties.Resources.resources
+D:\HCMUS\Term-06\Software-Architecture\Project\Source\my-paint-windows\MyPaint\obj\Debug\MyPaint.csproj.GenerateResource.Cache
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\bin\Debug\MyPaint.exe.config
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\bin\Debug\MyPaint.exe
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\bin\Debug\MyPaint.pdb
 C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\bin\Debug\MyPaintPlugin.dll
 C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\bin\Debug\MyPaintPlugin.pdb
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.csprojResolveAssemblyReference.cache
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\Options.baml
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MainWindow.g.cs
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\Options.g.cs
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\App.g.cs
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint_MarkupCompile.cache
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint_MarkupCompile.lref
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MainWindow.baml
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.g.resources
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.Properties.Resources.resources
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.csproj.GenerateResource.Cache
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.exe
+C:\Users\duy\Google Drive\1.HocKy2_2015_2016\3.SoftwareArchitecture\my-paint-windows\MyPaint\obj\Debug\MyPaint.pdb

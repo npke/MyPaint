@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media.Imaging;
 
 namespace MyPaint
 {
@@ -16,7 +17,7 @@ namespace MyPaint
             itemMenu = iMenu;
         }
 
-        public override void Execute(ref Canvas drawingCanvas,  ref Thumb canvasResizerRightBottom)
+        public override void Execute(ref Canvas drawingCanvas, ref Thumb canvasResizerRightBottom, string fileName, RenderTargetBitmap renderBitmap)
         {
             itemMenu.Open(ref drawingCanvas);
         }
