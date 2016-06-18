@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,7 +71,7 @@ namespace MyPaint
 
         public void Save()
         {
-            bitmapEncoder = GetBitmapEncoder(System.IO.Path.GetExtension(fileName));
+            bitmapEncoder = GetBitmapEncoder(Path.GetExtension(fileName));
 
             if (bitmapEncoder != null)
                 SaveAsBitmapFile();

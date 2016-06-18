@@ -1168,49 +1168,7 @@ namespace MyPaint
             {
                 SaveFileManager saveFile = new SaveFileManager(drawingCanvas, saveFileDialog.FileName, renderBitmap);
                 saveFile.Save();
-                //System.IO.MemoryStream ms = new System.IO.MemoryStream();
-                //BitmapEncoder bitmapEncoder;
-				 
-                //switch (System.IO.Path.GetExtension(saveFileDialog.FileName))
-                //{
-                //    // Lưu dạng bitmap
-                //    case ".bmp":
-                //        bitmapEncoder = new BmpBitmapEncoder();
-                //        break;
-
-                //    case ".png":
-                //        bitmapEncoder = new PngBitmapEncoder();
-                //        break;
-
-                //    case ".gif":
-                //        bitmapEncoder = new GifBitmapEncoder();
-                //        break;
-
-                //    case ".jpg":
-                //        bitmapEncoder = new JpegBitmapEncoder();
-                //        break;
-
-                //    // Lưu đối tượng
-                //    default:
-                //        string[] xamlShape = new string[drawingCanvas.Children.Count];
-                //        int i = 0;
-                //        foreach (UIElement mySaveShape in drawingCanvas.Children)
-                //        {
-                //            xamlShape[i] = XamlWriter.Save(mySaveShape);
-                //            i++;
-                //        }
-                //        System.IO.File.WriteAllLines(saveFileDialog.FileName, xamlShape);
-                //        ms.Close();
-                //        this.Title = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + "- My Paint";
-                //        return;
-                //}
-				
-                //bitmapEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
-                //bitmapEncoder.Save(ms);
-				
-                //ms.Close();
-                //System.IO.File.WriteAllBytes(saveFileDialog.FileName, ms.ToArray());
-                this.Title = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + "- My Paint";
+                this.Title = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + " - My Paint";
             }
         }
 
@@ -1306,8 +1264,7 @@ namespace MyPaint
         // Chức năng xoay canvas
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            //Options op = Options.GetOptionsInstance();
-            Options op = new Options();
+            Options op = Options.GetOptionsInstance();
             op.rotateCanvas = rotateCanvas;
             op.Show();
             op.Focus();
