@@ -38,6 +38,7 @@ namespace MyPaint
         double strokeThickness, top, left;
         DoubleCollection dashCollection = new DoubleCollection { };
 
+
         // Các biến đánh dấu trạng thái con trở chuột
         bool isMouseDowned = false;
         bool isDragging = false;
@@ -56,14 +57,10 @@ namespace MyPaint
 
         public static AdornerLayer adornerLayer;
 
-        //// Các stack phục vụ mục đích undo và redo
-        //public static Stack<List<UIElement>> CommandManager.UndoStack = new Stack<List<UIElement>>();
-        //public static Stack<List<UIElement>> CommandManager.RedoStack = new Stack<List<UIElement>>();
-
 
         // Đếm số lần thực hiện paste một đối tượng
-        int iPaste = 0;
-        double iLeft = 0, iTop = 0;
+        public static int iPaste = 0;
+        public static double iLeft = 0, iTop = 0;
 
         // Đối tượng quản lý các shape toggle button
         private ToggleButtonManager shapeToggleButtonManager = new ToggleButtonManager();
@@ -72,6 +69,7 @@ namespace MyPaint
         {
             InitializeComponent();
             InitializeShape();
+            CommandManager.PopulateListCmd();
             AddShapeToggleButton();
             ShapeFactory.PopulateBuiltInShape();
             loadPlugin();
@@ -374,22 +372,11 @@ namespace MyPaint
         }
 
 		
-		// Phương thức lưu lại các đối tượng hiện có của Canvas vào trong stack
-        private void SnapCanvas()
-        {
-            List<UIElement> UIEList = new List<UIElement>();
-            foreach (UIElement UIE in drawingCanvas.Children)
-            {
-                UIElement newUIE = DeepClone(UIE);
-                UIEList.Add(newUIE);
-            }
-
-            CommandManager.AddCurrentSate(UIEList);
-        }
+		
 
 		// Phương thức sao chép một đối tượng
         // Code tham khảo từ StackOverFlow
-        private UIElement DeepClone(UIElement element)
+        public static UIElement DeepClone(UIElement element)
         {
             string shapeStr = XamlWriter.Save(element);
             StringReader strReader = new StringReader(shapeStr);
@@ -405,7 +392,7 @@ namespace MyPaint
 
             if (isMoved)
             {
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
 
         	// Nếu ở chế độ vẽ
@@ -426,7 +413,7 @@ namespace MyPaint
                             return;
 
                         AddAdorner(myShape.DrawedElement);
-                        SnapCanvas();
+                        CommandManager.SnapCanvas(ref drawingCanvas);
                     }
                     catch (Exception ex)
                     {
@@ -458,7 +445,7 @@ namespace MyPaint
 				// Xử lý thao tác xóa
                 if (selectedUIElement != null)
                 {
-                    SnapCanvas();
+                    CommandManager.SnapCanvas(ref drawingCanvas);
                     drawingCanvas.Children.Remove(selectedUIElement);
                 }
 
@@ -508,7 +495,7 @@ namespace MyPaint
 
             if (selectedUIElement != null)
             {
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 
@@ -525,7 +512,7 @@ namespace MyPaint
 
             if (selectedUIElement != null)
             {
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 
@@ -657,12 +644,8 @@ namespace MyPaint
 		// Thực hiện copy
         private void CopyCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            string xaml = XamlWriter.Save(selectedUIElement);
-            Clipboard.SetText(xaml, TextDataFormat.Xaml);
-			
-            iPaste = 1; // Số lần paste dùng để xác định vị trí cho các đối tượng khi paste
-            iLeft = Canvas.GetLeft(selectedUIElement);
-            iTop = Canvas.GetTop(selectedUIElement);
+            CommandManager.CallItemCmd("copy", ref drawingCanvas, ref canvasResizerRightBottom);
+
         }
 
 		// Kiểm tra có thực hiện được thao tác cut hay không
@@ -677,17 +660,8 @@ namespace MyPaint
 		// Thực hiện thao tác cut
         private void CutCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            string xaml = XamlWriter.Save(selectedUIElement);
-            Clipboard.SetText(xaml, TextDataFormat.Xaml);
-            drawingCanvas.Children.Remove(selectedUIElement);
+            CommandManager.CallItemCmd("save", ref drawingCanvas, ref canvasResizerRightBottom);
 
-            iPaste = 1;
-            iLeft = Canvas.GetLeft(selectedUIElement);
-            iTop = Canvas.GetTop(selectedUIElement);
-
-            selectedShape = null;
-            selectedUIElement = null;
-			selectedTextBox = null;
         }
 
 		// Kiểm tra trước khi thực hiện thao tác paste
@@ -699,39 +673,7 @@ namespace MyPaint
 		// Thực hiện paste 
         private void PasteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            string xaml = Clipboard.GetText(TextDataFormat.Xaml);
-            if (xaml != null)
-            {
-                using (MemoryStream stream = new MemoryStream(xaml.Length))
-                {
-                    using (StreamWriter sw = new StreamWriter(stream))
-                    {
-                        sw.Write(xaml);
-                        sw.Flush();
-                        stream.Seek(0, SeekOrigin.Begin);
-                        Shape shape = XamlReader.Load(stream) as Shape;
-
-                        if (shape is Line)
-                        {
-                            Line line = new Line();
-                            line = (Line)shape;
-                            line.X1 += (10 + line.StrokeThickness) * iPaste;
-                            line.X2 += (10 + line.StrokeThickness) * iPaste;
-                        }
-                        else
-                        {
-                            Canvas.SetLeft(shape, iLeft + (10 + shape.StrokeThickness) * iPaste);
-                            Canvas.SetTop(shape, iTop + (10 + shape.StrokeThickness) * iPaste);
-                        }
-
-                        drawingCanvas.Children.Add(shape);
-                        SnapCanvas();
-                        RemoveAdorner();
-                        AddAdorner(shape);
-                        iPaste++;
-                    }
-               }
-            }
+            CommandManager.CallItemCmd("paste", ref drawingCanvas, ref canvasResizerRightBottom);
         }
 
 		// Kiểm tra có thực hiện được thao tác undo hay không
@@ -746,39 +688,7 @@ namespace MyPaint
 		// Xử lý undo
         private void UndoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //// Lấy trạng thái mới nhất bỏ vào RedoStack
-            //List<UIElement> undoList1 = UndoStack.Pop();
-            //RedoStack.Push(undoList1);
-            
-			// Nếu trước đó chỉ có 1 trạng thái => Dừng 
-            //drawingCanvas.Children.Clear();
-            //if (UndoStack.Count == 0)
-            //{
-            //    RemoveAdorner();
-            //    return;
-            //}
-
-			// Lấy trạng thái trước đó và đưa canvas về trạng thái này
-            //List<UIElement> undoList2 = UndoStack.Pop();
-            //foreach (UIElement UIE in undoList2)
-            //{
-            //    drawingCanvas.Children.Add(UIE);
-            //}
-			
-            //// Thiết lập selectedUIElement = null
-            //if (selectedUIElement != null)
-            //{
-            //    selectedShape = null;
-            //    selectedUIElement = null;
-            //    selectedTextBox = null;
-            //}
-			
-			// Đưa lại trạng thái vào stack
-            //UndoStack.Push(undoList2);
-
-
             CommandManager.BackWard(ref drawingCanvas);
-
         }
 
 		// Kiểm tra có thực hiện được thao tác redo hay không
@@ -793,17 +703,6 @@ namespace MyPaint
 		// Thực hiện xử lý redo
         private void RedoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-			// Lấy trạng thái canvas trong redo stack
-            //List<UIElement> redoList = RedoStack.Pop();
-            //UndoStack.Push(redoList);
-			
-            //// Thực hiện khôi phục lại trạng thái đó
-            //drawingCanvas.Children.Clear();
-            //foreach (UIElement UIE in redoList)
-            //{
-            //    drawingCanvas.Children.Add(UIE);
-            //}
-
             CommandManager.ForWard(ref drawingCanvas);
         }
 
@@ -840,7 +739,7 @@ namespace MyPaint
             img.Source = new BitmapImage(uriSource);
             drawingCanvas.Children.Add(img);
             AddAdorner(img);
-            SnapCanvas();
+            CommandManager.SnapCanvas(ref drawingCanvas);
         }
 
 		// Thực hiện cập nhật khi thuộc tính StrokeThickness thay đổi
@@ -868,7 +767,7 @@ namespace MyPaint
 
             if (selectedUIElement != null)
             {
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 
@@ -906,7 +805,7 @@ namespace MyPaint
             if (selectedShape != null)
             {
                 selectedShape.StrokeDashArray = dashCollection;
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 
@@ -918,7 +817,7 @@ namespace MyPaint
                 string selectedFont = FontList.SelectedItem.ToString();
                 if (selectedFont != "")
                     selectedTextBox.FontFamily = new FontFamily(selectedFont);
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 
@@ -932,7 +831,7 @@ namespace MyPaint
                 {
                     int fontSize = int.Parse(txtFontSize.Text);
                     selectedTextBox.FontSize = fontSize;
-                    SnapCanvas();
+                    CommandManager.SnapCanvas(ref drawingCanvas);
                 }
                 catch (Exception ex)
                 {
@@ -947,7 +846,7 @@ namespace MyPaint
             if (selectedTextBox != null)
             {
                 selectedTextBox.FontWeight = FontWeights.Bold;
-                SnapCanvas();  
+                CommandManager.SnapCanvas(ref drawingCanvas);  
             }
         }
 
@@ -957,7 +856,7 @@ namespace MyPaint
             if (selectedTextBox != null)
             {
                 selectedTextBox.FontStyle = FontStyles.Italic;
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 
@@ -967,7 +866,7 @@ namespace MyPaint
             if (selectedTextBox != null)
             {
                 selectedTextBox.TextDecorations = TextDecorations.Underline;
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 		
@@ -977,7 +876,7 @@ namespace MyPaint
             if (selectedTextBox != null)
             {
                 selectedTextBox.FontWeight = FontWeights.Normal;
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 
@@ -987,7 +886,7 @@ namespace MyPaint
             if (selectedTextBox != null)
             {
                 selectedTextBox.FontStyle = FontStyles.Normal;
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 
@@ -997,21 +896,14 @@ namespace MyPaint
             if (selectedTextBox != null)
             {
                 selectedTextBox.TextDecorations = null;
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 
 		// Xử lý khi người dúng bấm nút xóa
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedUIElement != null)
-            {
-                SnapCanvas();
-                drawingCanvas.Children.Remove(selectedUIElement);
-            }
-
-            selectedUIElement = null;
-            selectedShape = null;
+            CommandManager.CallItemCmd("detele", ref drawingCanvas, ref canvasResizerRightBottom);
         }
 	
 		// Căn chỉnh Horozontal Aligment của văn bản
@@ -1087,7 +979,7 @@ namespace MyPaint
             if (selectedTextBox != null)
             {
                 selectedTextBox.Foreground = textBrush;
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 		
@@ -1097,7 +989,7 @@ namespace MyPaint
             if (selectedTextBox != null)
             {
                 selectedTextBox.Background = Brushes.Transparent;
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 		
@@ -1107,7 +999,7 @@ namespace MyPaint
             if (selectedTextBox != null)
             {
                 selectedTextBox.BorderBrush = Brushes.Transparent;
-                SnapCanvas();
+                CommandManager.SnapCanvas(ref drawingCanvas);
             }
         }
 		
@@ -1143,8 +1035,8 @@ namespace MyPaint
             if (saveFileDialog.ShowDialog() == true)
             {
                 System.IO.MemoryStream ms = new System.IO.MemoryStream();
-				BitmapEncoder bitmapEncoder;
-				 
+                BitmapEncoder bitmapEncoder;
+
                 switch (System.IO.Path.GetExtension(saveFileDialog.FileName))
                 {
                     // Lưu dạng bitmap
@@ -1178,15 +1070,20 @@ namespace MyPaint
                         this.Title = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + "- My Paint";
                         return;
                 }
-				
-				bitmapEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+
+                bitmapEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
                 bitmapEncoder.Save(ms);
-				
+
                 ms.Close();
                 System.IO.File.WriteAllBytes(saveFileDialog.FileName, ms.ToArray());
                 this.Title = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + "- My Paint";
             }
+
+
+            
+            // 
         }
+
 
 		// Xử lý open command
         private void OpenCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -1196,49 +1093,15 @@ namespace MyPaint
 
         private void OpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (drawingCanvas.Children.Count != 0)
-            {
-                MessageBoxResult result = MessageBox.Show("Close current paint and open new?", "My Paint", MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                if (result != MessageBoxResult.OK)
-                {
-                    return;
-                }
-            }
-
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = false;
             openFileDialog.Filter = " Paint (*.paint)|*.paint|Bitmap (*.bmp)|*.bmp|PNG (*.png)|*.png|GIF (*.gif)|*.gif|JPEG (*.jpeg)|*.jpg";
-
-            if (openFileDialog.ShowDialog() == false)
-                return;
             this.Title = System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName) + " - My Paint";
-            if (System.IO.Path.GetExtension(openFileDialog.FileName) == ".paint")
-            {
-                drawingCanvas.Children.Clear();
-                string[] xamlShape = System.IO.File.ReadAllLines(openFileDialog.FileName);
-                foreach (string xamlShapeString in xamlShape)
-                {
-                    if (xamlShapeString != null)
-                    {
-                        using (MemoryStream stream = new MemoryStream(xamlShapeString.Length))
-                        {
-                            using (StreamWriter sw = new StreamWriter(stream))
-                            {
-                                sw.Write(xamlShapeString);
-                                sw.Flush();
-                                stream.Seek(0, SeekOrigin.Begin);
-                                UIElement shape = XamlReader.Load(stream) as UIElement;
-                                drawingCanvas.Children.Add(shape);
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
 
-            }
+            CommandManager.CallItemCmd("open", ref drawingCanvas, ref canvasResizerRightBottom);
         }
+
+
 
 		// Xử lý new command
         private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -1248,17 +1111,10 @@ namespace MyPaint
 
         private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (drawingCanvas.Children.Count != 0)
-            {
-                MessageBoxResult result = MessageBox.Show("Close current paint and create new?", "My Paint", MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                if (result != MessageBoxResult.OK)
-                {
-                    return;
-                }
-            }
-            drawingCanvas.Children.Clear();
-            RemoveAdorner();
+            CommandManager.CallItemCmd("new", ref drawingCanvas, ref canvasResizerRightBottom);
         }
+
+
 
         // Hàm xử lý khi Drag thumb resize canvas bottom right
         void ResizeCanvasRightBottom(object sender, DragDeltaEventArgs e)

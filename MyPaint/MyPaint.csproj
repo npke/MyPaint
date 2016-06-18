@@ -59,18 +59,25 @@
     <Compile Include="Arrow.cs" />
     <Compile Include="CanvasState.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="CutCommand.cs" />
+    <Compile Include="DeleteCommand.cs" />
     <Compile Include="Heart.cs" />
     <Compile Include="CommandManager.cs" />
+    <Compile Include="CopyCommand.cs" />
     <Compile Include="MyArrow.cs" />
     <Compile Include="MyHeart.cs" />
     <Compile Include="MyStar.cs" />
     <Compile Include="MyTriangle.cs" />
+    <Compile Include="NewCommand.cs" />
+    <Compile Include="OpenCommand.cs" />
     <Compile Include="Options.xaml.cs">
       <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
     <Compile Include="CanvasCommand.cs" />
+    <Compile Include="PasteCommand.cs" />
     <Compile Include="ResizingAdorner.cs" />
     <Compile Include="ResizingLineAdorner.cs" />
+    <Compile Include="SaveCommand.cs" />
     <Compile Include="ShapeFactory.cs" />
     <Compile Include="ShapeManager.cs" />
     <Compile Include="Star.cs" />
